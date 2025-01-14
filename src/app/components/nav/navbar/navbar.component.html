@@ -1,0 +1,28 @@
+<nav class="navbar">
+  <div class="navbar-container">
+    <div class="logo">
+      <i class="fas fa-utensils"></i>
+      <a routerLink="/">Restauracja</a>
+    </div>
+
+    <div class="desktop-menu">
+      <a routerLink="/">Strona główna</a>
+      <a href="/menu">Menu</a>
+      <a routerLink="/login" class="login-button">Zaloguj się</a>
+    </div>
+
+    <div class="mobile-menu-button">
+      <button (click)="toggleMenu()">
+        <svg viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="isMenuOpen" class="mobile-menu">
+    <a routerLink="/">Strona główna</a>
+    <a href="/menu">Menu</a>
+    <a routerLink="/login" class="login-button">Zaloguj się</a>
+  </div>
+</nav>
