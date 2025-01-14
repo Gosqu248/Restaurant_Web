@@ -1,0 +1,36 @@
+<form [formGroup]="loginForm" class="auth-form">
+  <h2>Zaloguj się</h2>
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input type="email" id="email" formControlName="email" placeholder="Wprowadź swój email">
+    <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="error-message">
+      Proszę wprowadzić poprawny email.
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="password">Hasło</label>
+    <div class="password-input">
+      <input [type]="showPassword ? 'text' : 'password'" id="password" formControlName="password" placeholder="Wprowadź swoje hasło">
+      <button type="button" (click)="togglePasswordVisibility()">
+        <i [class]="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+      </button>
+    </div>
+    <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="error-message">
+      Hasło jest wymagane.
+    </div>
+  </div>
+  <button type="submit" class="auth-button" [disabled]="loginForm.invalid">Zaloguj się</button>
+  <p class="auth-footer">
+    <a href="/forgot-password">Zapomniałeś hasła?</a>
+  </p>
+
+  <div class="separator" >
+    <div class="line"></div>
+    <span>LUB</span>
+    <div class="line"></div>
+  </div>
+
+  <button class="googleButton" (click)="loginWithGoogle()" >
+    <img class="social-logo" src="https://fonts.gstatic.com/s/i/productlogos/googleg/v6/24px.svg" alt="Logo Google"> Zaloguj się za pomocą Google
+  </button>
+</form>

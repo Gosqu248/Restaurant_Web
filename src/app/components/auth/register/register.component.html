@@ -1,0 +1,47 @@
+<form [formGroup]="registerForm" class="auth-form">
+  <h2>Zarejestruj się</h2>
+  <div class="form-group">
+    <label for="name">Imię</label>
+    <input type="text" id="name" formControlName="name" placeholder="Wprowadź swoje imię">
+    <div *ngIf="registerForm.get('name')?.invalid && registerForm.get('name')?.touched" class="error-message">
+      Imię jest wymagane.
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input type="email" id="email" formControlName="email" placeholder="Wprowadź swój email">
+    <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="error-message">
+      Proszę wprowadzić poprawny email.
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="password">Hasło</label>
+    <div class="password-input">
+      <input [type]="showPassword ? 'text' : 'password'" id="password" formControlName="password" placeholder="Wprowadź swoje hasło">
+      <button type="button" (click)="togglePasswordVisibility()">
+        <i [class]="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+      </button>
+    </div>
+    <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="error-message">
+      Hasło musi mieć co najmniej 6 znaków.
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="confirm-password">Potwierdź hasło</label>
+    <input type="password" id="confirm-password" formControlName="confirmPassword" placeholder="Potwierdź swoje hasło">
+    <div *ngIf="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched" class="error-message">
+      Hasła muszą być identyczne.
+    </div>
+  </div>
+  <button type="submit" class="auth-button" [disabled]="registerForm.invalid">Zarejestruj się</button>
+
+  <div class="separator" >
+    <div class="line"></div>
+    <span>LUB</span>
+    <div class="line"></div>
+  </div>
+
+  <button class="googleButton" (click)="loginWithGoogle()" >
+    <img class="social-logo" src="https://fonts.gstatic.com/s/i/productlogos/googleg/v6/24px.svg" alt="Logo Google"> Zaloguj się za pomocą Google
+  </button>
+</form>
