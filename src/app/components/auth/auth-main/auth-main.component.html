@@ -1,21 +1,22 @@
-<div class="auth-container">
-  <div class="auth-card">
-    <div class="auth-toggle">
-      <button
-        [ngClass]="{ active: isLogin }"
-        (click)="toggleForm('login')"
-      >
-        Zaloguj się
-      </button>
-      <button
-        [ngClass]="{ active: !isLogin }"
-        (click)="toggleForm('register')"
-      >
-        Zarejestruj się
-      </button>
-    </div>
+<div class="auth-container" [ngClass]="{'register': !isLogin }">
+    <div class="auth-card" >
+      <div class="auth-toggle">
+        <button
+          [ngClass]="{ active: isLogin }"
+          (click)="toggleForm('login')"
+        >
+          Zaloguj się
+        </button>
+        <button
+          [ngClass]="{ active: !isLogin }"
+          (click)="toggleForm('register')"
+        >
+          Zarejestruj się
+        </button>
+      </div>
 
-    <app-login *ngIf="isLogin"></app-login>
-    <app-register *ngIf="!isLogin"></app-register>
-  </div>
+      <app-login *ngIf="isLogin"></app-login>
+      <app-register *ngIf="!isLogin"></app-register>
+    </div>
 </div>
+
