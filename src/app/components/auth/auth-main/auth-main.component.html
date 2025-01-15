@@ -16,7 +16,7 @@
       </div>
 
       <app-login *ngIf="isLogin"></app-login>
-      <app-register *ngIf="!isLogin"></app-register>
+      <app-register *ngIf="!isLogin" (formToggle)="toggleForm($event)"></app-register>
     </div>
 </div>
 

@@ -1,4 +1,4 @@
-<form [formGroup]="registerForm" class="auth-form">
+<form [formGroup]="registerForm" class="auth-form" (ngSubmit)="onSubmit()">
   <h2>Zarejestruj się</h2>
   <div class="form-group">
     <label for="name">Imię</label>
@@ -15,6 +15,13 @@
     </div>
   </div>
   <div class="form-group">
+    <label for="phoneNumber">Numer telefonu</label>
+    <input type="text" id="phoneNumber" formControlName="phoneNumber" placeholder="Wprowadź swój numer telefonu">
+    <div *ngIf="registerForm.get('phoneNumber')?.invalid && registerForm.get('phoneNumber')?.touched" class="error-message">
+      Numer telefonu musi mieć 9 cyfr.
+    </div>
+  </div>
+  <div class="form-group">
     <label for="password">Hasło</label>
     <div class="password-input">
       <input [type]="showPassword ? 'text' : 'password'" id="password" formControlName="password" placeholder="Wprowadź swoje hasło">
@@ -23,13 +30,13 @@
       </button>
     </div>
     <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="error-message">
-      Hasło musi mieć co najmniej 6 znaków.
+      Hasło musi mieć co najmniej 8 znaków, zawierać jedną wielką literę i jeden znak specjalny (!#).
     </div>
   </div>
   <div class="form-group">
     <label for="confirm-password">Potwierdź hasło</label>
     <input type="password" id="confirm-password" formControlName="confirmPassword" placeholder="Potwierdź swoje hasło">
-    <div *ngIf="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched" class="error-message">
+    <div *ngIf="!isPasswordMatch" class="error-message">
       Hasła muszą być identyczne.
     </div>
   </div>
