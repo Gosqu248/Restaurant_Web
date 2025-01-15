@@ -132,8 +132,25 @@
   margin-right: 10px;
 }
 
+.error-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+}
+
 .error-container p {
   color: red;
   font-size: 1rem;
-  margin-top: 0.5rem;
+}
+
+.fa-circle-exclamation {
+  color: red;
+  margin-right: 10px;
+}
+
+.error-text {
+  color: red;
+  display: inline;
 }

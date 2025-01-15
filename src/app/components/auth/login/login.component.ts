@@ -49,6 +49,7 @@ export class LoginComponent {
               this.is2FA = true;
             } else {
               console.log("Nieprawidłowy login lub hasło");
+              this.isLoginError = true;
             }
           },
           error: (error) => {

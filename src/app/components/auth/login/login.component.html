@@ -20,9 +20,9 @@
     </div>
   </div>
   <div class="error-container" *ngIf="isLoginError">
-    <i class="fa-solid fa-circle-exclamation"></i>
-    <p *ngIf="errorMessage; else elseError">Konto zablokowane</p>
-    <ng-template #elseError>Nieprawidłowy login lub hasło!</ng-template>
+    <i class="fa-solid fa-circle-exclamation error-icon"></i>
+    <p *ngIf="errorMessage; else elseError" class="error-text">Konto zablokowane</p>
+    <ng-template #elseError><p class="error-text">Nieprawidłowy login lub hasło!</p></ng-template>
   </div>
   <button type="submit" class="auth-button" [disabled]="loginForm.invalid">Wyślij kod</button>
 </form>
