@@ -1,1 +1,28 @@
-<p>user-menu-profile works!</p>
+<div class="profile-menu">
+  <div class="first-section">
+    <i class="fa-solid fa-chevron-left" (click)="backToMenuDialog()"></i>
+    <h2>Profil</h2>
+    <i class="fa-regular fa-circle-xmark" (click)="closeDialog()"></i>
+  </div>
+  <div class="input-container">
+    <label for="name">Imię</label>
+    <input id="name" type="text" name="email" placeholder="Imię" [(ngModel)]="name" (ngModelChange)="showButton()" required>
+  </div>
+
+  <div class="input-container">
+    <label for="phoneNUmber">Numer telefonu</label>
+    <input id="phoneNUmber" type="text" name="phone" placeholder="Numer telefonu" [(ngModel)]="phoneNumber" (ngModelChange)="showButton()" required>
+  </div>
+
+  <button *ngIf="isDataChanged" (click)="updateUserData()" type="submit">Zaktualizuj dane</button>
+
+  <div class="input-container">
+    <label for="email">Email</label>
+    <input class="email-input" id="email" type="email" name="email" placeholder="Email" [(ngModel)]="email" readonly required>
+  </div>
+
+  <div class="password-container">
+    <h3>Chcesz zmienić hasło?</h3>
+    <button (click)="goToChangePasswordDialog()">Kliknij tutaj</button>
+  </div>
+</div>

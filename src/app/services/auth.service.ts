@@ -29,8 +29,12 @@ export class AuthService {
     if (isPlatformBrowser(this.platformId)) {
       const token = localStorage.getItem('jwt');
       if (token) {
-        this.fetchUserData(token);
-        this.isAuthenticatedSubject.next(true);
+        if (this.isTokenExpired(token)) {
+          this.logout();
+        } else {
+          this.fetchUserData(token);
+          this.isAuthenticatedSubject.next(true);
+        }
       }
     }
   }
@@ -133,9 +137,11 @@ export class AuthService {
     }
   }
 
-  changeUserName(token: string, name: string): Observable<string> {
+  updateUserData(token: string, name: string, phoneNumber: string): Observable<string> {
     const headers = new HttpHeaders().set("Authorization", `Bearer ${token}`);
-    return this.http.put(`${this.apiUrl}/changeName`, name, {headers, responseType: 'text'});
+    return this.http.put(`${this.apiUrl}/updateData`, {name, phoneNumber}, {headers, responseType: 'text'}).pipe(
+      tap(() => this.fetchUserData(token))
+    );
   }
 
   changePassword(token: string, password: string, newPassword: string): Observable<boolean> {
