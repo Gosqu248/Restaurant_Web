@@ -8,7 +8,8 @@
     <div class="desktop-menu">
       <a routerLink="/">Strona główna</a>
       <a href="/menu">Menu</a>
-      <a routerLink="/auth" class="login-button">Zaloguj się</a>
+      <a *ngIf="!isAuth" routerLink="/auth" class="login-button">Zaloguj się</a>
+      <a *ngIf="isAuth" (click)="openMenuDialog()" class="login-button">Moje konto</a>
     </div>
 
     <div class="mobile-menu-button">
@@ -23,6 +24,7 @@
   <div *ngIf="isMenuOpen" class="mobile-menu">
     <a routerLink="/">Strona główna</a>
     <a href="/menu">Menu</a>
-    <a routerLink="/auth" class="login-button">Zaloguj się</a>
+    <a *ngIf="!isAuth" routerLink="/auth" class="login-button">Zaloguj się</a>
+    <a *ngIf="isAuth" (click)="openMenuDialog()" class="login-button">Moje konto</a>
   </div>
 </nav>

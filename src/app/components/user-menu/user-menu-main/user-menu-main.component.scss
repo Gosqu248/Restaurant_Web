@@ -1,0 +1,151 @@
+.menu {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Center the element */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90%; /* Responsive width */
+  max-width: 800px; /* Maximum width for larger screens */
+  min-height: auto; /* Allow height to adjust based on content */
+  height: auto;
+  padding: 20px; /* Adjusted padding for better spacing */
+  text-align: center;
+  position: fixed;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  z-index: 100;
+  border-radius: 30px;
+  font-family: 'Fira Sans', sans-serif;
+  box-sizing: border-box; /* Ensure padding is included in width/height */
+
+  @media (max-width: 768px) {
+    width: 95%; /* Slightly smaller on tablets */
+    border-radius: 20px; /* Smaller border radius for smaller screens */
+  }
+
+  @media (max-width: 480px) {
+    width: 100%; /* Full width on mobile */
+    border-radius: 0; /* No border radius for full-screen appearance */
+    padding: 10px; /* Reduced padding for mobile */
+  }
+}
+
+.menu-first {
+  display: flex;
+  flex-direction: row;
+  align-items: center; /* Center items vertically */
+  justify-content: space-between;
+  width: 100%; /* Full width */
+  margin-bottom: 20px; /* Adjusted margin */
+
+  h2 {
+    color: #1c1a1a;
+    font-size: 24px; /* Responsive font size */
+    margin: 0; /* Remove default margin */
+  }
+
+  .fa-circle-xmark {
+    font-size: 30px;
+    color: #1c1a1a;
+    cursor: pointer;
+
+    &:hover {
+      color: #ff6200;
+    }
+  }
+}
+
+.menu-login {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%; /* Full width */
+  margin-bottom: 20px;
+
+  button {
+    width: 48%; /* Equal width for both buttons */
+    height: 40px;
+    border: none;
+    border-radius: 40px;
+    font-size: 16px; /* Responsive font size */
+    cursor: pointer;
+    font-weight: bold;
+
+    @media (max-width: 480px) {
+      font-size: 14px; /* Smaller font size for mobile */
+    }
+  }
+
+  .login-button {
+    background-color: #f80a0a;
+    color: white;
+
+    &:hover {
+      background-color: #bd0202;
+    }
+  }
+
+  .registry-button {
+    background-color: #e7e4e4;
+
+    &:hover {
+      background-color: #d2d0d0;
+    }
+  }
+}
+
+.menu-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%; /* Full width */
+  padding: 10px; /* Added padding for better touch targets */
+  margin-top: 10px;
+  transition: background-color 0.3s ease; /* Smooth hover transition */
+
+  &:hover {
+    background-color: #f1f1f1;
+    cursor: pointer;
+    border-radius: 10px;
+  }
+
+  i {
+    font-size: 20px;
+    color: #ff6200;
+    margin-right: 10px; /* Space between icon and text */
+  }
+
+  h3 {
+    color: #1c1a1a;
+    font-weight: normal;
+    font-size: 18px; /* Responsive font size */
+    margin: 0; /* Remove default margin */
+
+    @media (max-width: 480px) {
+      font-size: 16px; /* Smaller font size for mobile */
+    }
+  }
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+  .menu-first h2 {
+    font-size: 20px; /* Smaller font size for tablets */
+  }
+
+  .menu-item h3 {
+    font-size: 16px; /* Smaller font size for tablets */
+  }
+}
+
+@media (max-width: 480px) {
+  .menu-first h2 {
+    font-size: 18px; /* Smaller font size for mobile */
+  }
+
+  .menu-item h3 {
+    font-size: 14px; /* Smaller font size for mobile */
+  }
+}

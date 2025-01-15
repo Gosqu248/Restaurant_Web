@@ -15,10 +15,25 @@ export class AuthService {
   public isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
   loginEvent: EventEmitter<void> = new EventEmitter<void>();
 
+  private userDataSubject = new BehaviorSubject<UserDTO | null>(null);
+  public userData$ = this.userDataSubject.asObservable();
+
   constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: Object) {}
 
   register(user: User): Observable<any> {
     return this.http.post<{message: string}>(`${this.apiUrl}/register`, user)
+  }
+
+  fetchUserData(token: string) {
+    this.getUser(token).subscribe({
+      next: user => this.userDataSubject.next(user),
+      error: error => console.error('Error fetching user data', error)
+    });
+  }
+
+  getUser(token: string): Observable<UserDTO> {
+    const headers = new HttpHeaders().set("Authorization", `Bearer ${token}`);
+    return this.http.get<UserDTO>(`${this.apiUrl}/user`, {headers});
   }
 
   login(email: string, password: string): Observable<boolean> {
@@ -49,6 +64,8 @@ export class AuthService {
         localStorage.setItem('jwt', response.jwt);
         this.isAuthenticatedSubject.next(true);
         this.loginEvent.emit();
+        this.fetchUserData(response.jwt);
+
       }),
       map(() => true),
       catchError(() => of(false))
@@ -67,11 +84,6 @@ export class AuthService {
   };
 
 
-
-  getUser(token: string): Observable<UserDTO> {
-    const headers = new HttpHeaders().set("Authorization", `Bearer ${token}`);
-    return this.http.get<UserDTO>(`${this.apiUrl}/user`, {headers});
-  }
 
   logout() {
     if (isPlatformBrowser(this.platformId)) {
@@ -100,5 +112,9 @@ export class AuthService {
     } else {
       return false;
     }
+  }
+
+  setAuth() {
+    this.isAuthenticatedSubject.next(true);
   }
 }

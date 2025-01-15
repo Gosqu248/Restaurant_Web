@@ -1,0 +1,39 @@
+<div class="menu">
+  <div class="menu-first">
+      <h2> {{userData?.name}}</h2>
+    <i class="fa-regular fa-circle-xmark" (click)="closeDialog()"></i>
+  </div>
+
+  <div class="menu-item" *ngIf="role === 'admin'" (click)="goToOrderMonitor()">
+    <i class="fa-solid fa-user"></i>
+    <h3>Monitorowanie Zamówień</h3>
+  </div>
+
+  <div class="menu-item" *ngIf=" role === 'admin'" (click)="goToAddMenu()">
+    <i class="fa-solid fa-user"></i>
+    <h3>Dodaj produkt do menu</h3>
+  </div>
+
+  <div class="menu-item" (click)="openMenuProfileDialog()">
+    <i class="fa-solid fa-user"></i>
+    <h3>Profil</h3>
+  </div>
+  <div class="menu-item" (click)="openAddressesDialog()">
+    <i class="fa-solid fa-house"></i>
+    <h3>Adresy</h3>
+  </div>
+  <div class="menu-item" (click)="goToOrderHistory()">
+    <i class="fa-solid fa-bag-shopping"></i>
+    <h3>Zamówienia</h3>
+  </div>
+  <div class="menu-item" (click)="openFavoritesDialog()">
+    <i class="fa-solid fa-heart"></i>
+    <h3>Ulubione</h3>
+  </div>
+
+  <div class="menu-item" (click)="logout()">
+    <i class="fa-solid fa-sign-out"></i>
+    <h3>Wyloguj się</h3>
+  </div>
+
+</div>
