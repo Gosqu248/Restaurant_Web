@@ -53,84 +53,87 @@
       margin-top: 0.5rem;
     }
   }
+}
+.auth-footer {
+  margin-top: 1.5rem;
+  font-size: 1.3rem;
+  color: var(--color-gray-800);
 
-  .auth-button {
-    width: 100%;
-    background-color: var(--color-orange-500);
-    color: var(--color-white);
-    border: none;
-    padding: 1rem;
-    font-size: 1rem;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+  a {
+    color: var(--color-orange-500);
+    text-decoration: none;
+    transition: color 0.3s ease;
 
     &:hover {
-      background-color: var(--color-orange-600);
-    }
-
-    &:disabled {
-      background-color: var(--color-gray-800);
-      cursor: not-allowed;
+      color: var(--color-orange-600);
     }
   }
+}
+.auth-button {
+  width: 100%;
+  background-color: var(--color-orange-500);
+  color: var(--color-white);
+  border: none;
+  padding: 1rem;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 
-  .auth-footer {
-    margin-top: 1.5rem;
-    font-size: 1.3rem;
-    color: var(--color-gray-800);
-
-    a {
-      color: var(--color-orange-500);
-      text-decoration: none;
-      transition: color 0.3s ease;
-
-      &:hover {
-        color: var(--color-orange-600);
-      }
-    }
+  &:hover {
+    background-color: var(--color-orange-600);
   }
 
-  .separator {
-    display: flex;
-    align-items: center;
-    text-align: center;
-    margin: 20px auto;
-    width: 50%;
+  &:disabled {
+    background-color: var(--color-gray-800);
+    cursor: not-allowed;
   }
+}
+.separator {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 20px auto;
+  width: 50%;
+}
 
-  .separator .line {
-    flex: 1;
-    height: 1px;
-    background-color: #000;
-  }
+.separator .line {
+  flex: 1;
+  height: 1px;
+  background-color: #000;
+}
 
-  .separator span {
-    padding: 0 10px;
-    font-weight: bold;
-  }
+.separator span {
+  padding: 0 10px;
+  font-weight: bold;
+}
 
-  .googleButton {
-    margin: auto;
-    width: 300px;
-    padding: 10px;
-    border-radius: 10px;
-    background-color: white;
-    border: lightgrey 1px solid;
-    color: black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+.googleButton {
+  margin: auto;
+  width: 300px;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: white;
+  border: lightgrey 1px solid;
+  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-  .googleButton:hover {
-    cursor: pointer;
-    background-color: lightgrey;
-  }
+.googleButton:hover {
+  cursor: pointer;
+  background-color: lightgrey;
+}
 
-  .social-logo {
-    width: 30px;
-    height: 30px;
-    margin-right: 10px;
-  }
+.social-logo {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+}
+
+.error-container p {
+  color: red;
+  font-size: 1rem;
+  margin-top: 0.5rem;
 }

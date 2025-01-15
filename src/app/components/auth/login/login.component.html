@@ -1,4 +1,4 @@
-<form [formGroup]="loginForm" class="auth-form">
+<form [formGroup]="loginForm" class="auth-form" (ngSubmit)="onSubmit()" *ngIf="!is2FA">
   <h2>Zaloguj się</h2>
   <div class="form-group">
     <label for="email">Email</label>
@@ -19,18 +19,37 @@
       Hasło jest wymagane.
     </div>
   </div>
-  <button type="submit" class="auth-button" [disabled]="loginForm.invalid">Zaloguj się</button>
-  <p class="auth-footer">
-    <a href="/forgot-password">Zapomniałeś hasła?</a>
-  </p>
+  <div class="error-container" *ngIf="isLoginError">
+    <i class="fa-solid fa-circle-exclamation"></i>
+    <p *ngIf="errorMessage; else elseError">Konto zablokowane</p>
+    <ng-template #elseError>Nieprawidłowy login lub hasło!</ng-template>
+  </div>
+  <button type="submit" class="auth-button" [disabled]="loginForm.invalid">Wyślij kod</button>
+</form>
 
-  <div class="separator" >
+<form class="auth-form"  *ngIf="is2FA">
+  <div class="form-group">
+    <label for="twoFactorCode">Kod weryfikacyjny</label>
+    <input id="twoFactorCode" type="text" [(ngModel)]="twoFactorCode" name="twoFactorCode" placeholder="Wprowadź od weryfikacyjny" required>
+  </div>
+  <div class="error-container" *ngIf="isLoginError">
+    <i class="fa-solid fa-circle-exclamation"></i>
+    <p> Nieprawidłowy kod weryfikacyjny</p>
+  </div>
+  <button class="auth-button" (click)="verify2FA(twoFactorCode)">Zaloguj</button>
+</form>
+
+<p class="auth-footer">
+    <a href="/forgot-password">Zapomniałeś hasła?</a>
+</p>
+
+<div class="separator" >
     <div class="line"></div>
     <span>LUB</span>
     <div class="line"></div>
-  </div>
+</div>
 
-  <button class="googleButton" (click)="loginWithGoogle()" >
+<button class="googleButton" (click)="loginWithGoogle()" >
     <img class="social-logo" src="https://fonts.gstatic.com/s/i/productlogos/googleg/v6/24px.svg" alt="Logo Google"> Zaloguj się za pomocą Google
-  </button>
-</form>
+</button>
+
