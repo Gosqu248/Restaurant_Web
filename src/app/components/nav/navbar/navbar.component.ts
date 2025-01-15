@@ -23,7 +23,7 @@ export class NavbarComponent {
               private dialog: MatDialog) {
     this.authService.isAuthenticated$.subscribe(isAuth => {
       this.isAuth = isAuth;
-      console.log('isAuth', isAuth);
+
     });
   }
 

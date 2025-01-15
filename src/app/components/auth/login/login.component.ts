@@ -66,7 +66,7 @@ export class LoginComponent {
   }
 
   loginWithGoogle() {
-    window.location.href = 'http://localhost:8080/oauth2/authorization/google';
+    this.authService.initiateGoogleLogin();
   }
 
   verify2FA(code: string) {
@@ -74,7 +74,6 @@ export class LoginComponent {
       next: (isAuthenticated: boolean) => {
         if (isAuthenticated) {
           console.log("Logged in successfully");
-          this.authService.loginEvent.emit();
           this.router.navigate(['/'])
         } else {
           console.error("Invalid 2FA code");

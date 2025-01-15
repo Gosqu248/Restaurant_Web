@@ -21,7 +21,6 @@ export class UserMenuMainComponent implements OnInit{
   role: string = '';
   name: string = '';
   userData: UserDTO | null = null;
-  private isFetchingUserData: boolean = false;
 
   constructor(protected authService: AuthService,
               private dialog: MatDialog,
@@ -31,11 +30,7 @@ export class UserMenuMainComponent implements OnInit{
   ngOnInit() {
     this.authService.userData$.subscribe(userData => {
       this.userData = userData;
-      console.log('userData', userData);
     });
-
-    const token = localStorage.getItem('jwt');
-    console.log('token', token);
   }
 
   logout() {

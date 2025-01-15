@@ -9,5 +9,5 @@ export const routes: Routes = [
   {
     path: 'auth',
     loadComponent: () => import('./components/auth/auth-main/auth-main.component').then(m => m.AuthMainComponent)
-  }
+  },
 ];

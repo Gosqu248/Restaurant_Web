@@ -11,14 +11,29 @@ import {User, UserDTO} from '../interfaces/user';
 export class AuthService {
   private apiUrl = environment.api + '/api/auth';
 
-  private isAuthenticatedSubject = new BehaviorSubject<boolean>(this.isAuthenticated());
-  public isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
-  loginEvent: EventEmitter<void> = new EventEmitter<void>();
-
   private userDataSubject = new BehaviorSubject<UserDTO | null>(null);
   public userData$ = this.userDataSubject.asObservable();
 
-  constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: Object) {}
+  private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
+  public isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
+
+  constructor(
+    private http: HttpClient,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {
+    this.checkAuthStatus();
+    this.handleGoogleCallback();
+  }
+
+  private checkAuthStatus() {
+    if (isPlatformBrowser(this.platformId)) {
+      const token = localStorage.getItem('jwt');
+      if (token) {
+        this.fetchUserData(token);
+        this.isAuthenticatedSubject.next(true);
+      }
+    }
+  }
 
   register(user: User): Observable<any> {
     return this.http.post<{message: string}>(`${this.apiUrl}/register`, user)
@@ -62,14 +77,39 @@ export class AuthService {
     return this.http.post<{jwt: string}>(`${this.apiUrl}/verify-2fa`, {email, code}).pipe(
       tap(response => {
         localStorage.setItem('jwt', response.jwt);
-        this.isAuthenticatedSubject.next(true);
-        this.loginEvent.emit();
         this.fetchUserData(response.jwt);
-
+        this.isAuthenticatedSubject.next(true);
       }),
       map(() => true),
-      catchError(() => of(false))
+      catchError(() => {
+        this.isAuthenticatedSubject.next(false);
+        return of(false);
+      })
     );
+  }
+
+  initiateGoogleLogin(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      window.location.href = environment.api + '/oauth2/authorization/google';
+    }
+  }
+
+  private handleGoogleCallback(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      const urlParams = new URLSearchParams(window.location.search);
+      const token = urlParams.get('token');
+      const error = urlParams.get('error');
+
+      if (token) {
+        localStorage.setItem('jwt', token);
+        this.fetchUserData(token);
+        this.isAuthenticatedSubject.next(true);
+        window.history.replaceState({}, document.title, window.location.pathname);
+      } else if (error) {
+        console.error('Google login error');
+        this.isAuthenticatedSubject.next(false);
+      }
+    }
   }
 
   resetPassword(email: string): Observable<any> {
@@ -83,17 +123,14 @@ export class AuthService {
     )
   };
 
-
-
   logout() {
     if (isPlatformBrowser(this.platformId)) {
       localStorage.removeItem('jwt');
       localStorage.removeItem('name');
       localStorage.removeItem('email');
-
+      this.userDataSubject.next(null);
+      this.isAuthenticatedSubject.next(false);
     }
-    this.isAuthenticatedSubject.next(false);
-
   }
 
   changeUserName(token: string, name: string): Observable<string> {
@@ -106,15 +143,19 @@ export class AuthService {
     return this.http.put<boolean>(`${this.apiUrl}/changePassword`, {password, newPassword}, {headers});
   }
 
-  isAuthenticated(): boolean {
-    if (isPlatformBrowser(this.platformId)) {
-      return !!localStorage.getItem('jwt');
-    } else {
-      return false;
+  getToken(): string | null {
+    return isPlatformBrowser(this.platformId) ? localStorage.getItem('jwt') : null;
+  }
+
+  private isTokenExpired(token: string): boolean {
+    if (!token) return true;
+
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return payload.exp * 1000 < Date.now();
+    } catch {
+      return true;
     }
   }
 
-  setAuth() {
-    this.isAuthenticatedSubject.next(true);
-  }
 }
