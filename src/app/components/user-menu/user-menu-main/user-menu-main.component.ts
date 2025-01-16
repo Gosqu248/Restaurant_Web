@@ -4,7 +4,7 @@ import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {Router} from '@angular/router';
 import {NgIf} from '@angular/common';
 import {UserMenuFavouriteComponent} from '../user-menu-favourite/user-menu-favourite.component';
-import {UserMenuAddressComponent} from '../user-menu-address/user-menu-address.component';
+import {UserMenuAddressComponent} from '../address/user-menu-address/user-menu-address.component';
 import {UserMenuProfileComponent} from '../user-menu-profile/user-menu-profile.component';
 import {UserDTO} from '../../../interfaces/user';
 

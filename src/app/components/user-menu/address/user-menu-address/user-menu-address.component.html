@@ -1,0 +1,37 @@
+<div class="addresses-menu">
+  <div class="first-section">
+    <i class="fa-solid fa-chevron-left" (click)="backToMenuDialog()"></i>
+    <h2>Twój addres</h2>
+    <i class="fa-regular fa-circle-xmark" (click)="closeDialog()"></i>
+  </div>
+
+  <ng-container *ngIf="isAddress; else hasAddress">
+    <div class="addresses-container">
+      <div class="item-container">
+        <div class="left-container">
+          <div class="street">{{address.street}} {{address.houseNumber}}</div>
+          <div class="connection">
+            <div class="zipCode">{{address.zipCode}}</div>
+            <div class="city">{{address.city}}</div>
+          </div>
+        </div>
+
+        <div class="right-container">
+          <div class="edit-container" (click)="goToChangeAddress()">
+            <h4>Edytuj address</h4>
+            <i class="fa-solid fa-pencil"></i>
+          </div>
+          <div class="delete-container" (click)="removeAddress()">
+            <h4>Usuń address</h4>
+            <i class="fa-regular fa-circle-xmark"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #hasAddress>
+    <h3>Brak addressu, proszę dodać!</h3>
+    <button (click)="openAddAddressDialog()"> Dodaj address</button>
+  </ng-template>
+</div>

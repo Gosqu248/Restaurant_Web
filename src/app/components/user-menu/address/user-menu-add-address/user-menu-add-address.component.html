@@ -1,0 +1,58 @@
+<div class="add-menu">
+  <div class="first-section">
+    <i class="fa-solid fa-chevron-left" (click)="backToMenuAddressesDialog()"></i>
+    <h2>Dodaj adres</h2>
+    <i class="fa-regular fa-circle-xmark" (click)="closeDialog()"></i>
+  </div>
+
+  <form [formGroup]="addressForm" (ngSubmit)="addAddress()">
+    <div class="address-container">
+      <div class="input-container">
+        <label for="street">Ulica: *</label>
+        <input id="street" type="text" formControlName="street" name="street" autocomplete="text" required>
+      </div>
+
+      <div class="input-container">
+        <label for="houseNumber">Numer domu: *</label>
+        <input id="houseNumber" type="text" formControlName="houseNumber" name="houseNumber" autocomplete="text" required>
+      </div>
+    </div>
+
+    <div class="address-container">
+      <div class="input-container">
+        <label for="floorNumber">Numer piętra</label>
+        <input id="floorNumber" type="text" formControlName="floorNumber" name="floorNumber" autocomplete="text" required>
+      </div>
+
+      <div class="input-container">
+        <label for="accessCode">Kod dostępu</label>
+        <input id="accessCode" type="text" formControlName="accessCode" name="accessCode" autocomplete="text" required>
+      </div>
+    </div>
+
+    <div class="address-container">
+      <div class="input-container">
+        <label for="zipCode">Kod pocztowy: *</label>
+        <input id="zipCode" type="text" formControlName="zipCode" name="zipCode" autocomplete="text" required placeholder=" __-___">
+      </div>
+
+      <div class="input-container">
+        <label for="city">Miasto: *</label>
+        <input id="city" type="text" formControlName="city" name="city" autocomplete="text" required>
+      </div>
+    </div>
+
+    <div class="address-container">
+      <div class="input-container">
+        <label for="phoneNumber">Numer telefonu: *</label>
+        <input id="phoneNumber" type="text" formControlName="phoneNumber" name="phoneNumber" autocomplete="text" required>
+        <div class="error-container" *ngIf="showErrorFor('phoneNumber')">
+          <i class="fa-solid fa-circle-exclamation"></i>
+          <p>Błędny numer telefonu</p>
+        </div>
+      </div>
+    </div>
+
+    <button type="submit">Dodaj adres</button>
+  </form>
+</div>
