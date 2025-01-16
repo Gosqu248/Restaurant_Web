@@ -1,0 +1,68 @@
+<div id="particles-js" class="page-wrapper">
+  <div class="add-menu-container">
+    <div class="form-container">
+      <h2>Dodaj nowy produkt</h2>
+
+      <form [formGroup]="menuForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="name">Nazwa</label>
+          <input
+            id="name"
+            type="text"
+            formControlName="name"
+            placeholder="Wpisz nazwę produktu">
+        </div>
+
+        <div class="form-group">
+          <label for="category">Kategoria</label>
+          <select id="category" formControlName="category">
+            <option value="">Wybierz kategorię</option>
+            <option *ngFor="let cat of categories" [value]="cat">
+              {{cat}}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="ingredients">Składniki</label>
+          <textarea
+            id="ingredients"
+            formControlName="ingredients"
+            placeholder="Wpisz składniki (opcjonalnie)">
+          </textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="price">Cena</label>
+          <input
+            id="price"
+            type="number"
+            formControlName="price"
+            placeholder="Wpisz cenę">
+        </div>
+
+        <div class="form-group image-upload">
+          <label for="image">
+            <div class="upload-area" [class.has-image]="previewImage">
+              <img *ngIf="previewImage" [src]="previewImage" alt="Podgląd">
+              <div *ngIf="!previewImage" class="upload-placeholder">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <span>Kliknij, aby przesłać obraz</span>
+              </div>
+            </div>
+          </label>
+          <input
+            id="image"
+            type="file"
+            accept="image/*"
+            (change)="onImageSelected($event)"
+            hidden>
+        </div>
+
+        <button type="submit" [disabled]="menuForm.invalid">
+          Dodaj do menu
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

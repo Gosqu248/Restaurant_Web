@@ -1,4 +1,3 @@
-import {UserAddress} from './user.address.interface';
 
 export interface User {
   id?: number;
@@ -7,7 +6,6 @@ export interface User {
   phoneNumber: string;
   password: string;
   role: string;
-  addresses?: UserAddress;
 }
 
 export interface UserDTO {
