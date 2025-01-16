@@ -9,7 +9,6 @@ import {NgIf} from '@angular/common';
   selector: 'app-user-menu-add-address',
   imports: [
     ReactiveFormsModule,
-    NgIf
   ],
   templateUrl: './user-menu-add-address.component.html',
   standalone: true,
@@ -32,11 +31,6 @@ export class UserMenuAddAddressComponent {
       accessCode: [' '],
       zipCode: ['', Validators.required],
       city: ['', Validators.required],
-      phoneNumber: ['',
-        [Validators.required,
-          Validators.minLength(8),
-          Validators.pattern(/^\d{9}$/)
-        ]]
     });
   }
 
@@ -47,10 +41,11 @@ export class UserMenuAddAddressComponent {
       if (jwt) {
         this.addressService.addAddress(jwt, this.addressForm.value).subscribe({
           next: response => {
-            console.log('Address added successfully', response);
+            console.log(response);
             this.backToMenuAddressesDialog();
           },
           error: error => {
+            console.error('Error adding address: ', error);
             alert('Prawdopodobnie podany adres jest nieprawidłowy. Spróbuj ponownie.');
           }
         });
@@ -72,13 +67,5 @@ export class UserMenuAddAddressComponent {
     this.dialog.open(UserMenuAddressComponent);
   }
 
-  showErrorFor(controlName: string): boolean {
-    const control = this.addressForm.get(controlName);
-    if (controlName === 'phoneNumber') {
-      const phoneNumberPattern = /^\d{3} \d{3} \d{3}$/;
-      return control ? control.invalid && (control.dirty || control.touched) && !phoneNumberPattern.test(control.value) : false;
-    } else {
-      return control ? control.invalid && (control.dirty || control.touched) : false;
-    }
-  }
+
 }

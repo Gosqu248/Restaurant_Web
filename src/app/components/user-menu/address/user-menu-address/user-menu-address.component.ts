@@ -10,7 +10,6 @@ import {NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-user-menu-address',
-
   templateUrl: './user-menu-address.component.html',
   standalone: true,
   imports: [
@@ -19,8 +18,7 @@ import {NgIf} from '@angular/common';
   styleUrl: './user-menu-address.component.scss'
 })
 export class UserMenuAddressComponent implements OnInit{
-  address: UserAddress = {} as UserAddress;
-  isAddress: boolean = false;
+  address: UserAddress | null = null;
 
   constructor(
     private authService: AuthService,
@@ -30,27 +28,31 @@ export class UserMenuAddressComponent implements OnInit{
   ) {}
 
   ngOnInit() {
-    this.loadAddress()
+   this.loadAddress()
   }
 
-  loadAddress(): void {
-    const jwt = localStorage.getItem('jwt')
+  loadAddress() {
+    this.addressService.address$.subscribe((address) => {
+      this.address = address;
+    });
+  }
 
+  removeAddress() {
+    const jwt = localStorage.getItem('jwt')
     if (jwt) {
-      this.addressService.getAddresses(jwt).subscribe({
-        next: (address: UserAddress) => {
-          this.address = address;
-          this.isAddress = true;
-          console.log(address)
-        },
-        error: error => {
-          this.isAddress = false;
-          console.error("Error loading address ", error)
-        }
-      });
+      if (this.address?.id) {
+        this.addressService.deleteAddress(jwt, this.address.id).subscribe({
+          next: (response) => {
+            console.log(response);
+            this.loadAddress();
+          },
+          error: (error) => console.error(error)
+        });
+      } else {
+        console.error("Something wrong with address");
+      }
     } else {
-      this.isAddress = false;
-      console.error("No token found")
+      console.error("No token found");
     }
   }
 
@@ -75,7 +77,5 @@ export class UserMenuAddressComponent implements OnInit{
     });
   }
 
-  removeAddress() {
 
-  }
 }

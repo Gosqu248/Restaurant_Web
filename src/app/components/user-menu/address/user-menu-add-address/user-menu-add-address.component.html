@@ -42,16 +42,6 @@
       </div>
     </div>
 
-    <div class="address-container">
-      <div class="input-container">
-        <label for="phoneNumber">Numer telefonu: *</label>
-        <input id="phoneNumber" type="text" formControlName="phoneNumber" name="phoneNumber" autocomplete="text" required>
-        <div class="error-container" *ngIf="showErrorFor('phoneNumber')">
-          <i class="fa-solid fa-circle-exclamation"></i>
-          <p>Błędny numer telefonu</p>
-        </div>
-      </div>
-    </div>
 
     <button type="submit">Dodaj adres</button>
   </form>

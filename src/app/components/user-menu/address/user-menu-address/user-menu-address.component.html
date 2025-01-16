@@ -5,7 +5,7 @@
     <i class="fa-regular fa-circle-xmark" (click)="closeDialog()"></i>
   </div>
 
-  <ng-container *ngIf="isAddress; else hasAddress">
+  <ng-container *ngIf="!!address; else hasAddress">
     <div class="addresses-container">
       <div class="item-container">
         <div class="left-container">
