@@ -4,7 +4,6 @@ import {AuthService} from '../../../../services/auth.service';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {UserMenuAddAddressComponent} from '../user-menu-add-address/user-menu-add-address.component';
 import {UserAddress} from '../../../../interfaces/user.address.interface';
-import {UserMenuAddressChangeComponent} from '../user-menu-address-change/user-menu-address-change.component';
 import {AddressService} from '../../../../services/address.service';
 import {NgIf} from '@angular/common';
 
@@ -72,8 +71,8 @@ export class UserMenuAddressComponent implements OnInit{
 
   goToChangeAddress() {
     this.dialogRef.close();
-    this.dialog.open(UserMenuAddressChangeComponent, {
-      data: { address: this.address },
+    this.dialog.open(UserMenuAddAddressComponent, {
+      data: { address: this.address, isEditMode: true },
     });
   }
 

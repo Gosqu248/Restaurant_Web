@@ -1,11 +1,11 @@
 <div class="add-menu">
   <div class="first-section">
     <i class="fa-solid fa-chevron-left" (click)="backToMenuAddressesDialog()"></i>
-    <h2>Dodaj adres</h2>
+    <h2>{{ isEditMode ? 'Edytuj adres' : 'Dodaj adres' }}</h2>
     <i class="fa-regular fa-circle-xmark" (click)="closeDialog()"></i>
   </div>
 
-  <form [formGroup]="addressForm" (ngSubmit)="addAddress()">
+  <form [formGroup]="addressForm" (ngSubmit)="onSubmit()">
     <div class="address-container">
       <div class="input-container">
         <label for="street">Ulica: *</label>
@@ -21,19 +21,19 @@
     <div class="address-container">
       <div class="input-container">
         <label for="floorNumber">Numer piętra</label>
-        <input id="floorNumber" type="text" formControlName="floorNumber" name="floorNumber" autocomplete="text" required>
+        <input id="floorNumber" type="text" formControlName="floorNumber" name="floorNumber" autocomplete="text">
       </div>
 
       <div class="input-container">
         <label for="accessCode">Kod dostępu</label>
-        <input id="accessCode" type="text" formControlName="accessCode" name="accessCode" autocomplete="text" required>
+        <input id="accessCode" type="text" formControlName="accessCode" name="accessCode" autocomplete="text">
       </div>
     </div>
 
     <div class="address-container">
       <div class="input-container">
         <label for="zipCode">Kod pocztowy: *</label>
-        <input id="zipCode" type="text" formControlName="zipCode" name="zipCode" autocomplete="text" required placeholder=" __-___">
+        <input id="zipCode" type="text" formControlName="zipCode" name="zipCode" autocomplete="text" required placeholder="__-___">
       </div>
 
       <div class="input-container">
@@ -42,7 +42,6 @@
       </div>
     </div>
 
-
-    <button type="submit">Dodaj adres</button>
+    <button type="submit">{{ isEditMode ? 'Zapisz zmiany' : 'Dodaj adres' }}</button>
   </form>
 </div>
