@@ -1,55 +1,61 @@
+<ng-container *ngIf="!isRememberPassword; else rememberPassword" >
 <form [formGroup]="loginForm" class="auth-form" (ngSubmit)="onSubmit()" *ngIf="!is2FA">
-  <h2>Zaloguj się</h2>
-  <div class="form-group">
-    <label for="email">Email</label>
-    <input type="email" id="email" formControlName="email" placeholder="Wprowadź swój email">
-    <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="error-message">
-      Proszę wprowadzić poprawny email.
+    <h2>Zaloguj się</h2>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" formControlName="email" placeholder="Wprowadź swój email">
+      <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="error-message">
+        Proszę wprowadzić poprawny email.
+      </div>
     </div>
-  </div>
-  <div class="form-group">
-    <label for="password">Hasło</label>
-    <div class="password-input">
-      <input [type]="showPassword ? 'text' : 'password'" id="password" formControlName="password" placeholder="Wprowadź swoje hasło">
-      <button type="button" (click)="togglePasswordVisibility()">
-        <i [class]="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
-      </button>
+    <div class="form-group">
+      <label for="password">Hasło</label>
+      <div class="password-input">
+        <input [type]="showPassword ? 'text' : 'password'" id="password" formControlName="password" placeholder="Wprowadź swoje hasło">
+        <button type="button" (click)="togglePasswordVisibility()">
+          <i [class]="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+        </button>
+      </div>
+      <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="error-message">
+        Hasło jest wymagane.
+      </div>
     </div>
-    <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="error-message">
-      Hasło jest wymagane.
+    <div class="error-container" *ngIf="isLoginError">
+      <i class="fa-solid fa-circle-exclamation error-icon"></i>
+      <p *ngIf="errorMessage; else elseError" class="error-text">Konto zablokowane</p>
+      <ng-template #elseError><p class="error-text">Nieprawidłowy login lub hasło!</p></ng-template>
     </div>
-  </div>
-  <div class="error-container" *ngIf="isLoginError">
-    <i class="fa-solid fa-circle-exclamation error-icon"></i>
-    <p *ngIf="errorMessage; else elseError" class="error-text">Konto zablokowane</p>
-    <ng-template #elseError><p class="error-text">Nieprawidłowy login lub hasło!</p></ng-template>
-  </div>
-  <button type="submit" class="auth-button" [disabled]="loginForm.invalid">Wyślij kod</button>
-</form>
+    <button type="submit" class="auth-button" [disabled]="loginForm.invalid">Wyślij kod</button>
+  </form>
 
-<form class="auth-form"  *ngIf="is2FA">
-  <div class="form-group">
-    <label for="twoFactorCode">Kod weryfikacyjny</label>
-    <input id="twoFactorCode" type="text" [(ngModel)]="twoFactorCode" name="twoFactorCode" placeholder="Wprowadź od weryfikacyjny" required>
+  <form class="auth-form"  *ngIf="is2FA">
+    <div class="form-group">
+      <label for="twoFactorCode">Kod weryfikacyjny</label>
+      <input id="twoFactorCode" type="text" [(ngModel)]="twoFactorCode" name="twoFactorCode" placeholder="Wprowadź od weryfikacyjny" required>
+    </div>
+    <div class="error-container" *ngIf="isLoginError">
+      <i class="fa-solid fa-circle-exclamation"></i>
+      <p> Nieprawidłowy kod weryfikacyjny</p>
+    </div>
+    <button class="auth-button" (click)="verify2FA(twoFactorCode)">Zaloguj</button>
+  </form>
+
+  <p class="auth-footer">
+    <button class="auth-footer-button" (click)="showRememberPassword()">Zapomniałeś hasła?</button>
+  </p>
+
+  <div class="separator" >
+      <div class="line"></div>
+      <span>LUB</span>
+      <div class="line"></div>
   </div>
-  <div class="error-container" *ngIf="isLoginError">
-    <i class="fa-solid fa-circle-exclamation"></i>
-    <p> Nieprawidłowy kod weryfikacyjny</p>
-  </div>
-  <button class="auth-button" (click)="verify2FA(twoFactorCode)">Zaloguj</button>
-</form>
 
-<p class="auth-footer">
-    <a href="/forgot-password">Zapomniałeś hasła?</a>
-</p>
+  <button class="googleButton" (click)="loginWithGoogle()" >
+      <img class="social-logo" src="https://fonts.gstatic.com/s/i/productlogos/googleg/v6/24px.svg" alt="Logo Google"> Zaloguj się za pomocą Google
+  </button>
+</ng-container>
 
-<div class="separator" >
-    <div class="line"></div>
-    <span>LUB</span>
-    <div class="line"></div>
-</div>
-
-<button class="googleButton" (click)="loginWithGoogle()" >
-    <img class="social-logo" src="https://fonts.gstatic.com/s/i/productlogos/googleg/v6/24px.svg" alt="Logo Google"> Zaloguj się za pomocą Google
-</button>
+<ng-template #rememberPassword>
+  <app-remember-password *ngIf="isRememberPassword" (backToLogin)="showRememberPassword()" ></app-remember-password>
+</ng-template>
 

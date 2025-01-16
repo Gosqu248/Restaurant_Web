@@ -1,22 +1,23 @@
 <div class="auth-container" [ngClass]="{'register': !isLogin }">
-    <div class="auth-card" >
-      <div class="auth-toggle">
-        <button
-          [ngClass]="{ active: isLogin }"
-          (click)="toggleForm('login')"
-        >
-          Zaloguj się
-        </button>
-        <button
-          [ngClass]="{ active: !isLogin }"
-          (click)="toggleForm('register')"
-        >
-          Zarejestruj się
-        </button>
-      </div>
+  <div class="auth-card">
+    <div class="auth-toggle">
+      <button
+        [ngClass]="{ active: isLogin }"
+        (click)="toggleForm('login')"
+      >
+        Zaloguj się
+      </button>
+      <button
+        [ngClass]="{ active: !isLogin }"
+        (click)="toggleForm('register')"
+      >
+        Zarejestruj się
+      </button>
+    </div>
 
+    <div [@formAnimation]="isLogin ? 'login' : 'register'">
       <app-login *ngIf="isLogin"></app-login>
       <app-register *ngIf="!isLogin" (formToggle)="toggleForm($event)"></app-register>
     </div>
+  </div>
 </div>
-

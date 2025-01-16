@@ -116,17 +116,6 @@ export class AuthService {
     }
   }
 
-  resetPassword(email: string): Observable<any> {
-    return this.http.post<{ message: string }>(`${this.apiUrl}/reset-password`, {email}).pipe(
-      catchError(error => {
-        if (error.status === 401) {
-          return of({error: 'Email not found'});
-        }
-        return throwError(error);
-      })
-    )
-  };
-
   logout() {
     if (isPlatformBrowser(this.platformId)) {
       localStorage.removeItem('jwt');
@@ -149,9 +138,27 @@ export class AuthService {
     return this.http.put<boolean>(`${this.apiUrl}/changePassword`, {password, newPassword}, {headers});
   }
 
-  getToken(): string | null {
-    return isPlatformBrowser(this.platformId) ? localStorage.getItem('jwt') : null;
+  sendResetPasswordEmail(email: string): Observable<string> {
+    return this.http.post(`${this.apiUrl}/reset-password`, { email }, { responseType: 'text' })
+      .pipe(
+        map(response => {
+          try {
+            return JSON.parse(response);
+          } catch (e) {
+            return response;
+          }
+        }),
+        catchError(error => {
+          console.error('Error occurred while sending reset password email:', error);
+          return throwError(() => new Error('An error occurred while sending the reset password email'));
+        })
+      );
   }
+
+  resetPassword(token: string, newPassword: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/confirm-reset-password`, { token, newPassword });
+  }
+
 
   private isTokenExpired(token: string): boolean {
     if (!token) return true;

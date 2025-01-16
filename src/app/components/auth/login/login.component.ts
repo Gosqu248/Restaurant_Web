@@ -3,17 +3,21 @@ import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} fr
 import {NgIf} from '@angular/common';
 import {AuthService} from '../../../services/auth.service';
 import {Router} from '@angular/router';
+import {RememberPasswordComponent} from '../remember-password/remember-password.component';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'app-login',
   imports: [
     ReactiveFormsModule,
     NgIf,
-    FormsModule
+    FormsModule,
+    RememberPasswordComponent
   ],
   templateUrl: './login.component.html',
   standalone: true,
-  styleUrl: './login.component.scss'
+  styleUrl: './login.component.scss',
+
 })
 export class LoginComponent {
   showPassword: boolean = false;
@@ -22,6 +26,7 @@ export class LoginComponent {
   isLoginError: boolean = false;
   errorMessage: string | null = null;
   twoFactorCode: string = '';
+  isRememberPassword: boolean = false;
 
   constructor(private fb: FormBuilder,
               private router: Router,
@@ -87,4 +92,10 @@ export class LoginComponent {
       }
     });
   }
+
+  showRememberPassword() {
+    this.isRememberPassword = !this.isRememberPassword;
+  }
+
+
 }
