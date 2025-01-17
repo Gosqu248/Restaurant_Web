@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import {NavbarComponent} from './components/nav/navbar/navbar.component';
+import {MenuService} from './services/menu.service';
 
 @Component({
   selector: 'app-root',
@@ -9,6 +10,12 @@ import {NavbarComponent} from './components/nav/navbar/navbar.component';
   standalone: true,
   styleUrl: './app.component.scss'
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
   title = 'Restaurant_Web';
+
+  constructor(private menuService: MenuService) {
+  }
+  ngOnInit() {
+    this.menuService.fetchMenus();
+  }
 }

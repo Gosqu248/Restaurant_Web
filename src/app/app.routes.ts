@@ -17,5 +17,9 @@ export const routes: Routes = [
   {
     path: 'add-menu',
     loadComponent: () => import('./components/admin/add-menu/add-menu.component').then(m => m.AddMenuComponent)
+  },
+  {
+    path: 'menu',
+    loadComponent: () => import('./components/menu/menu-list/menu-list.component').then(m => m.MenuListComponent)
   }
 ];

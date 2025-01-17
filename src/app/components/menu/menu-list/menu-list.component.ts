@@ -1,15 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MenuService} from '../../../services/menu.service';
 import {Menu} from '../../../interfaces/menu';
+import {CurrencyPipe, NgForOf, NgIf} from '@angular/common';
 
 
 @Component({
   selector: 'app-menu-list',
   templateUrl: './menu-list.component.html',
   standalone: true,
+  imports: [
+    NgForOf,
+    NgIf,
+    CurrencyPipe
+  ],
   styleUrls: ['./menu-list.component.scss']
 })
-export class MenuListComponent implements OnInit {
+export class MenuListComponent implements OnInit{
   menus: Menu[] = [];
 
   constructor(private menuService: MenuService) { }
@@ -19,9 +25,10 @@ export class MenuListComponent implements OnInit {
   }
 
   loadMenus(): void {
-    this.menuService.getAllMenus().subscribe({
-      next: (menus) => {
+    this.menuService.menus$.subscribe({
+      next: (menus: Menu[]) => {
         this.menus = menus;
+        console.log('Menus loaded', menus);
       },
       error: (error) => {
         console.error('Error fetching menus', error);
