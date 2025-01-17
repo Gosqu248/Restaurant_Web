@@ -4,5 +4,5 @@ export interface Menu {
   category: string;
   ingredients?: string;
   price: number;
-  imageUrl?: string;
+  imageUrl: string | null;
 }
