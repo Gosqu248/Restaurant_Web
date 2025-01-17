@@ -1,12 +1,9 @@
-<div class="menu-container">
-  <div *ngFor="let menu of menus" class="menu-item">
-    <!-- Show image if available -->
+
     <img *ngIf="menu.imageUrl"
          [src]="menu.imageUrl"
          [alt]="menu.name"
          class="menu-image">
 
-    <!-- Show fallback/placeholder if no image -->
     <div *ngIf="!menu.imageUrl" class="menu-image-placeholder">
       No Image Available
     </div>
@@ -17,5 +14,3 @@
       <p *ngIf="menu.ingredients" class="ingredients">{{menu.ingredients}}</p>
       <p class="price">{{menu.price | currency}}</p>
     </div>
-  </div>
-</div>

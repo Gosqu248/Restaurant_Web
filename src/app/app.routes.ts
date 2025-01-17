@@ -20,6 +20,6 @@ export const routes: Routes = [
   },
   {
     path: 'menu',
-    loadComponent: () => import('./components/menu/menu-list/menu-list.component').then(m => m.MenuListComponent)
+    loadComponent: () => import('./components/menu/menu-main/menu-main.component').then(m => m.MenuMainComponent)
   }
 ];

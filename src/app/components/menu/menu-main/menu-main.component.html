@@ -1,0 +1,12 @@
+<ngx-particles
+  [id]="id"
+  [options]="particlesOptions"
+  class="container"
+  (particlesLoaded)="particlesLoaded($event)">
+</ngx-particles>
+
+<div class="menu-container">
+  <div *ngFor="let menu of menus" class="menu-item">
+    <app-menu-item [menu]="menu"></app-menu-item>
+  </div>
+</div>
