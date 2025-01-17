@@ -11,7 +11,7 @@ $dark-gray: #333333;
   background-color: #1a1a1a;
   display: flex;
   justify-content: center;
-  padding-bottom: 350px;
+  padding-bottom: 100vh;
 }
 
 .add-menu-container {
@@ -46,6 +46,7 @@ $dark-gray: #333333;
     .form-group {
       margin-bottom: 1.5rem;
 
+
       label {
         display: block;
         margin-bottom: 0.5rem;
@@ -76,6 +77,24 @@ $dark-gray: #333333;
         min-height: 100px;
         resize: vertical;
       }
+    }
+
+    .separator {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      margin: 20px auto;
+      width: 50%;
+    }
+
+    .separator .line {
+      flex: 1;
+      height: 1px;
+      background-color: #000;
+    }
+
+    .separator span {
+      padding: 0 10px;
     }
 
     .image-upload {

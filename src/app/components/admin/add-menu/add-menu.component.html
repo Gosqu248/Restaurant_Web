@@ -59,6 +59,22 @@
             hidden>
         </div>
 
+        <div class="separator" >
+          <div class="line"></div>
+          <span>LUB</span>
+          <div class="line"></div>
+        </div>
+
+        <div class="form-group">
+          <label for="imageUrl">Link obrazu</label>
+          <input
+            id="imageUrl"
+            formControlName="imageUrl"
+            placeholder="Wprowadź link obrazu (opcjonalnie)">
+        </div>
+
+
+
         <button type="submit" [disabled]="menuForm.invalid">
           Dodaj do menu
         </button>

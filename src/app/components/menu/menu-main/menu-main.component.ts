@@ -21,6 +21,7 @@ import {MenuItemComponent} from '../menu-item/menu-item.component';
 })
 export class MenuMainComponent implements OnInit {
   menus: Menu[] = [];
+
   id = "tsparticles";
   particlesOptions: ISourceOptions = {
     ...configs.snow,
@@ -29,7 +30,6 @@ export class MenuMainComponent implements OnInit {
         value: "#faa86f"
       }
     },
-
   };
 
   constructor(private menuService: MenuService, private readonly ngParticlesService: NgParticlesService) {
@@ -40,7 +40,6 @@ export class MenuMainComponent implements OnInit {
 
     void this.ngParticlesService.init(async (engine: Engine) => {
       console.log("init", engine);
-
       await loadSlim(engine);
     });
   }
