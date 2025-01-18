@@ -12,24 +12,20 @@
   <input
     type="text"
     class="search"
-    placeholder="Wyszukaj..."
+    placeholder="Wyszukaj po nazwie..."
     [(ngModel)]="searchMenuItem"
     (input)="filterMenus()"
   >
 
   <div class="menu-groups">
-    <div>
-
-  </div>
-    </div>
-  <div class="menu-item-container">
-    <div *ngFor="let category of filteredMenus | keyvalue">
-      <h3>{{category.key}}</h3>
-      <div *ngFor="let menu of category.value" class="menu-item">
-        <app-menu-item [menu]="menu"></app-menu-item>
+    <div *ngFor="let group of groupedMenuItems" class="menu-group">
+      <h3 class="category-title">{{group.category}}</h3>
+      <div class="menu-item-container">
+          <div *ngFor="let menu of group.items" class="menu-item">
+            <app-menu-item [menu]="menu"></app-menu-item>
+          </div>
+        </div>
       </div>
     </div>
-
-  </div>
-
 </div>
+

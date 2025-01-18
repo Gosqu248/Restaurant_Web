@@ -5,7 +5,7 @@ import configs from '@tsparticles/configs';
 import {MenuService} from '../../../services/menu.service';
 import {NgParticlesService, NgxParticlesModule} from '@tsparticles/angular';
 import {loadSlim} from '@tsparticles/slim';
-import {KeyValuePipe, NgForOf} from '@angular/common';
+import {NgForOf} from '@angular/common';
 import {MenuItemComponent} from '../menu-item/menu-item.component';
 import {MenuCategoryComponent} from '../menu-category/menu-category.component';
 import {Subject, takeUntil} from 'rxjs';
@@ -20,7 +20,6 @@ import {GroupedMenuItems} from '../../../interfaces/grouped-menu-items';
     MenuItemComponent,
     MenuCategoryComponent,
     FormsModule,
-    KeyValuePipe
   ],
   templateUrl: './menu-main.component.html',
   standalone: true,
