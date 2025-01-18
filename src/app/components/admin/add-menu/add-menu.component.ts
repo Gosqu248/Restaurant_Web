@@ -26,7 +26,7 @@ export class AddMenuComponent implements OnInit {
     'Pizza',
     'Burgery',
     'Kanapki i Wrapy',
-    'Frytki i kanapki',
+    'Frytki',
     'Napoje',
     'Desery',
     'Sałatki',

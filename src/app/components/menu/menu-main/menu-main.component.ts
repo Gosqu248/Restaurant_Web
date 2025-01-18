@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Menu} from '../../../interfaces/menu';
 import type {Engine, ISourceOptions} from '@tsparticles/engine';
 import configs from '@tsparticles/configs';
@@ -7,24 +7,24 @@ import {NgParticlesService, NgxParticlesModule} from '@tsparticles/angular';
 import {loadSlim} from '@tsparticles/slim';
 import {NgForOf} from '@angular/common';
 import {MenuItemComponent} from '../menu-item/menu-item.component';
-import {Category} from '../../../interfaces/category';
+import {MenuCategoryComponent} from '../menu-category/menu-category.component';
+import {Subject, takeUntil} from 'rxjs';
 
 @Component({
   selector: 'app-menu-main',
   imports: [
     NgForOf,
     NgxParticlesModule,
-    MenuItemComponent
+    MenuItemComponent,
+    MenuCategoryComponent
   ],
   templateUrl: './menu-main.component.html',
   standalone: true,
   styleUrl: './menu-main.component.scss'
 })
-export class MenuMainComponent implements OnInit {
-  menus: Menu[] = [];
-  categories: Category[] = [];
+export class MenuMainComponent implements OnInit, OnDestroy {
   filteredMenus: Menu[] = [];
-  selectedCategory: Category | null = null;
+  private destroy$ = new Subject<void>();
 
   id = "tsparticles";
   particlesOptions: ISourceOptions = {
@@ -41,9 +41,17 @@ export class MenuMainComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadMenus();
-    this.filteredMenus = this.menus;
-    this.loadCategories();
     this.generateParticles();
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+  loadMenus(): void {
+    this.menuService.filteredMenus$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((menus) => this.filteredMenus = menus);
   }
 
   generateParticles(): void {
@@ -51,31 +59,6 @@ export class MenuMainComponent implements OnInit {
       await loadSlim(engine);
     });
   }
-  loadMenus(): void {
-    this.menuService.menus$.subscribe({
-      next: (menus: Menu[]) => {
-        this.filteredMenus = menus;
-        this.menus = menus;
-      },
-      error: (error) => {
-        console.error('Error fetching menus', error);
-      }
-    });
-  }
 
-  loadCategories(): void {
-    this.categories = this.menuService.getCategories();
-  }
 
-  filterMenus(category: Category) {
-    if (category === this.selectedCategory) {
-      this.filteredMenus = this.menus;
-      this.selectedCategory = null;
-      return;
-    } else {
-      this.filteredMenus = this.menus.filter((menu) => menu.category === category.name);
-      this.selectedCategory = category;
-
-    }
-  }
 }

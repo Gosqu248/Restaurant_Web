@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {environment} from '../../enviorments/environment';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, forkJoin, map, Observable, of, switchMap} from 'rxjs';
+import {BehaviorSubject, catchError, forkJoin, map, Observable, of, shareReplay, switchMap} from 'rxjs';
 import {Menu} from '../interfaces/menu';
 import {Category} from '../interfaces/category';
 
@@ -9,69 +9,111 @@ import {Category} from '../interfaces/category';
   providedIn: 'root'
 })
 export class MenuService {
-  private apiUrl = environment.api + '/api/menu';
+  private readonly apiUrl = environment.api + '/api/menu';
+  private readonly STORAGE_KEY = 'menus';
 
-  private menus: BehaviorSubject<Menu[]> = new BehaviorSubject<Menu[]>(this.loadMenusFromSessionStorage());
-  menus$: Observable<Menu[]> = this.menus.asObservable();
+  private readonly menus: BehaviorSubject<Menu[]> = new BehaviorSubject<Menu[]>(this.loadMenusFromStorage());
+  private selectedCategory: BehaviorSubject<Category | null> = new BehaviorSubject<Category | null>(null);
+
+  readonly filteredMenus$ = this.menus.pipe(
+    switchMap(menus => this.selectedCategory.pipe(
+      map(category => category
+        ? menus.filter(menu => menu.category === category.name)
+        : menus
+      )
+    )),
+    shareReplay(1)
+  )
+
+  readonly selectedCategory$ = this.selectedCategory.asObservable();
+  readonly categories$ = this.menus.pipe(
+    map(this.extractCategories),
+    shareReplay(1)
+  );
 
   constructor(private http: HttpClient) { }
 
   fetchMenus(): void {
     this.getAllMenus().pipe(
-      map(menus => {
-        const menuRequests = menus.map(menu =>
-         menu.imageUrl
-          ? of(menu)
-          : this.getMenuImage(menu.id).pipe(
-              map(imageBlob => {
-                menu.imageUrl = URL.createObjectURL(imageBlob);
-                return menu;
-              })
-            )
-        );
-        return forkJoin(menuRequests);
-      }),
-      switchMap(observable => observable)
-    ).subscribe({
-      next: (menus: Menu[]) => {
-        this.menus.next(menus);
-        sessionStorage.setItem('menus', JSON.stringify(menus));
-      },
-      error: (error) => {
-        console.error('Error fetching menus with images', error);
-      }
+      switchMap(menus => this.loadMenuImages(menus)),
+      catchError(error => {
+        console.error('Error fetching menus:', error);
+        return of(this.loadMenusFromStorage());
+      })
+    ).subscribe(menus => {
+      this.menus.next(menus);
+      this.saveMenusToStorage(menus);
     });
   }
 
-  getCategories(): Category[] {
-    const menus = this.menus.getValue();
-    const categoriesSet = new Set<string>();
-
-    menus.forEach(menu => categoriesSet.add(menu.category));
-
-    return Array.from(categoriesSet).map(categoryName => {
-      const categoryMenu = menus.find(menu => menu.category === categoryName);
-      return {
-        name: categoryName,
-        imageUrl: categoryMenu?.imageUrl || ''
-      }
-    });
+  filterMenus(category: Category) {
+    if (category.name !== this.selectedCategory.getValue()?.name) {
+      this.selectedCategory.next(category);
+    } else {
+      this.selectedCategory.next(null);
+    }
+  }
+  addMenu(menuData: FormData): Observable<Menu> {
+    return this.http.post<Menu>(`${this.apiUrl}/add`, menuData).pipe(
+      switchMap(() => {
+        this.fetchMenus()
+        return of();
+      })
+    );
   }
 
-  getAllMenus(): Observable<Menu[]> {
+  private getAllMenus(): Observable<Menu[]> {
     return this.http.get<Menu[]>(`${this.apiUrl}/getAll`);
   }
 
-  getMenuImage(id: number): Observable<Blob> {
+
+  private getMenuImage(id: number): Observable<Blob> {
     return this.http.get(`${this.apiUrl}/${id}/image`, {responseType: 'blob'});
   }
 
-  addMenu(menuData: FormData): Observable<Menu> {
-    return this.http.post<Menu>(`${this.apiUrl}/add`, menuData);
+  private loadMenuImages(menus: Menu[]): Observable<Menu[]> {
+    const menuObservables = menus.map(menu => {
+      if (menu.imageUrl) {
+        return of(menu);
+      }
+
+      return this.getMenuImage(menu.id).pipe(
+        map(image => ({
+          ...menu,
+          imageUrl: image.size > 0 ? URL.createObjectURL(image) : menu.imageUrl
+        })),
+        catchError(() => of(menu))
+      );
+    });
+
+    return forkJoin(menuObservables);
   }
 
-  loadMenusFromSessionStorage(): Menu[] {
-    return JSON.parse(sessionStorage.getItem('menus') || '[]');
+  private extractCategories(menus: Menu[]): Category[] {
+    const categoryMap = new Map<string, string>();
+
+    menus.forEach(menu => {
+      if (!categoryMap.has(menu.category)) {
+        categoryMap.set(menu.category, menu.imageUrl || '');
+      }
+    })
+
+    return Array.from(categoryMap.entries()).map(([name, imageUrl]) => ({
+      name,
+      imageUrl
+    }));
+  }
+
+  private loadMenusFromStorage(): Menu[] {
+    try {
+      return JSON.parse(sessionStorage.getItem(this.STORAGE_KEY) || '[]');
+    } catch {
+      return [];
+    }
+  }
+
+  private saveMenusToStorage(menus: Menu[]): void {
+    sessionStorage.setItem(this.STORAGE_KEY, JSON.stringify(menus));
   }
 
 }
