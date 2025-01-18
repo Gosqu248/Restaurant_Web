@@ -22,12 +22,15 @@ export class AddMenuComponent implements OnInit {
   previewImage: string | ArrayBuffer | null | undefined = null;
 
   categories = [
-    'Danie główne',
-    'Desery',
-    'Napoje',
+    'Dania główne',
     'Pizza',
     'Burgery',
+    'Kanapki i Wrapy',
+    'Frytki i kanapki',
+    'Napoje',
+    'Desery',
     'Sałatki',
+    'Sosy i dodatki'
   ];
 
   constructor(

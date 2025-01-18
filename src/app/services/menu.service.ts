@@ -3,6 +3,7 @@ import {environment} from '../../enviorments/environment';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, forkJoin, map, Observable, of, switchMap} from 'rxjs';
 import {Menu} from '../interfaces/menu';
+import {Category} from '../interfaces/category';
 
 @Injectable({
   providedIn: 'root'
@@ -42,10 +43,20 @@ export class MenuService {
     });
   }
 
-  loadMenusFromSessionStorage(): Menu[] {
-    return JSON.parse(sessionStorage.getItem('menus') || '[]');
-  }
+  getCategories(): Category[] {
+    const menus = this.menus.getValue();
+    const categoriesSet = new Set<string>();
 
+    menus.forEach(menu => categoriesSet.add(menu.category));
+
+    return Array.from(categoriesSet).map(categoryName => {
+      const categoryMenu = menus.find(menu => menu.category === categoryName);
+      return {
+        name: categoryName,
+        imageUrl: categoryMenu?.imageUrl || ''
+      }
+    });
+  }
 
   getAllMenus(): Observable<Menu[]> {
     return this.http.get<Menu[]>(`${this.apiUrl}/getAll`);
@@ -59,5 +70,8 @@ export class MenuService {
     return this.http.post<Menu>(`${this.apiUrl}/add`, menuData);
   }
 
+  loadMenusFromSessionStorage(): Menu[] {
+    return JSON.parse(sessionStorage.getItem('menus') || '[]');
+  }
 
 }

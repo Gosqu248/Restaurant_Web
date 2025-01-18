@@ -5,12 +5,11 @@
          class="menu-image">
 
     <div *ngIf="!menu.imageUrl" class="menu-image-placeholder">
-      No Image Available
+      Brak zdjęcia
     </div>
 
     <div class="menu-details">
       <h3>{{menu.name}}</h3>
       <p class="category">{{menu.category}}</p>
-      <p *ngIf="menu.ingredients" class="ingredients">{{menu.ingredients}}</p>
       <p class="price">{{menu.price | currency}}</p>
     </div>

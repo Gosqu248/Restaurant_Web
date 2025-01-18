@@ -1,12 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {Menu} from '../../../interfaces/menu';
-import type {Container, Engine, ISourceOptions} from '@tsparticles/engine';
+import type {Engine, ISourceOptions} from '@tsparticles/engine';
 import configs from '@tsparticles/configs';
 import {MenuService} from '../../../services/menu.service';
 import {NgParticlesService, NgxParticlesModule} from '@tsparticles/angular';
 import {loadSlim} from '@tsparticles/slim';
 import {NgForOf} from '@angular/common';
 import {MenuItemComponent} from '../menu-item/menu-item.component';
+import {Category} from '../../../interfaces/category';
 
 @Component({
   selector: 'app-menu-main',
@@ -21,6 +22,9 @@ import {MenuItemComponent} from '../menu-item/menu-item.component';
 })
 export class MenuMainComponent implements OnInit {
   menus: Menu[] = [];
+  categories: Category[] = [];
+  filteredMenus: Menu[] = [];
+  selectedCategory: Category | null = null;
 
   id = "tsparticles";
   particlesOptions: ISourceOptions = {
@@ -37,18 +41,21 @@ export class MenuMainComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadMenus();
+    this.filteredMenus = this.menus;
+    this.loadCategories();
+    this.generateParticles();
+  }
 
-    void this.ngParticlesService.init(async (engine: Engine) => {
-      console.log("init", engine);
+  generateParticles(): void {
+     this.ngParticlesService.init(async (engine: Engine) => {
       await loadSlim(engine);
     });
   }
-
   loadMenus(): void {
     this.menuService.menus$.subscribe({
       next: (menus: Menu[]) => {
+        this.filteredMenus = menus;
         this.menus = menus;
-        console.log('Menus loaded', menus);
       },
       error: (error) => {
         console.error('Error fetching menus', error);
@@ -56,7 +63,19 @@ export class MenuMainComponent implements OnInit {
     });
   }
 
-  particlesLoaded(container: Container): void {
-    console.log(container);
+  loadCategories(): void {
+    this.categories = this.menuService.getCategories();
+  }
+
+  filterMenus(category: Category) {
+    if (category === this.selectedCategory) {
+      this.filteredMenus = this.menus;
+      this.selectedCategory = null;
+      return;
+    } else {
+      this.filteredMenus = this.menus.filter((menu) => menu.category === category.name);
+      this.selectedCategory = category;
+
+    }
   }
 }
