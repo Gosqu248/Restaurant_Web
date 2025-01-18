@@ -27,6 +27,8 @@ import {CurrencyPLPipe} from '../../../pipes/currency-pl.pipe';
 })
 export class MenuDialogComponent implements OnInit {
   menu: Menu = {} as Menu;
+  quantity: number = 1;
+
   constructor(private dialogRef: MatDialogRef<MenuDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: { menu: Menu}) { }
 
@@ -41,6 +43,14 @@ export class MenuDialogComponent implements OnInit {
   onAddToCart(): void {
     // Implement your add to cart logic here
     this.dialogRef.close();
+  }
+
+  addQuantity(): void {
+    this.quantity++;
+  }
+
+  removeQuantity(): void {
+    this.quantity > 1 ? this.quantity-- : null
   }
 
 }
