@@ -7,9 +7,9 @@
         <p><strong>Cena:</strong> {{ menu.price | currencyPL }}</p>
         <p><strong>Składniki:</strong> {{ menu.ingredients || 'Nie zostały podane' }}</p>
         <div class="quantity-container">
-          <button class="quantity-button"></button>
+          <button class="quantity-button" (click)="removeQuantity()">&#8722;</button>
           <p>{{quantity}}</p>
-          <button class="quantity-button"></button>
+          <button class="quantity-button" (click)="addQuantity()">&#43;</button>
         </div>
         <mat-dialog-actions align="end">
           <button mat-button mat-dialog-close>Zamknij</button>

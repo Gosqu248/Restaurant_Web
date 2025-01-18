@@ -12,8 +12,9 @@
     .menu-item-image {
       width: 100%;
       max-width: 400px;
-      height: auto;
+      height: 400px;
       border-radius: 10px;
+      object-fit: fill;
     }
 
     .menu-item-details {
@@ -38,11 +39,12 @@
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
-        margin: 10px auto;
+        margin: 30px auto;
 
-        button {
-          padding: 25px 25px;
-          font-size: 1.5rem;
+        .quantity-button {
+          padding: 10px 15px;
+          font-size: 2rem;
+          color: white;
           border-radius: 50%;
           border: none;
           background: linear-gradient(145deg, #f1be98, #ea580c);
@@ -57,7 +59,7 @@
 }
 
 button {
-  padding: 10px 20px;
+  padding: 30px 20px;
   font-size: 1.2rem;
 }
 
@@ -70,5 +72,9 @@ button {
 
   .menu-dialog-container .menu-dialog-content {
     flex-direction: column;
+  }
+
+  button {
+    font-size: 1.5rem;
   }
 }
