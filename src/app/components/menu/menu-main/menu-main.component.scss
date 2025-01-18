@@ -5,10 +5,10 @@
 }
 
 .menu-container {
-  top: 6vh;
+  top: 10vh;
   max-width: 1000px;
-  background: rgba(255, 255, 255, 0.4);
-  padding: 20px;
+  background: rgba(255, 255, 255, 0.5);
+  padding: 5px 0;
   position: relative;
   margin: 0 auto;
   border-radius: 10px;
@@ -16,6 +16,7 @@
 
 .menu-title {
   text-align: center;
+  margin-bottom: 20px;
 }
 
 .menu-item-container {

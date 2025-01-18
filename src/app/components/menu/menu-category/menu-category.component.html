@@ -1,10 +1,26 @@
-<div class="categories">
+<div class="categories-container">
   <button
-  *ngFor="let category of categories"
-  (click)="filterMenu(category)"
-  [class.active]="selectedCategory === category"
-  class="category-button">
-    <img [src]="category.imageUrl" [alt]="category.name" class="category-image">
-    <span>{{category.name}}</span>
+    class="nav-button nav-button-left"
+    *ngIf="showLeftButton"
+    (click)="scroll('left')">
+    &#10094;
+  </button>
+
+  <div class="categories" #categoriesContainer (scroll)="checkScrollButtons()">
+    <button
+    *ngFor="let category of categories"
+    (click)="filterMenu(category)"
+    [class.active]="selectedCategory === category"
+    class="category-button">
+      <img [src]="category.imageUrl" [alt]="category.name" class="category-image">
+      <span>{{category.name}}</span>
+    </button>
+  </div>
+
+  <button
+    *ngIf="showRightButton"
+    class="nav-button nav-button-right"
+    (click)="scroll('right')">
+    &#10095;
   </button>
 </div>
