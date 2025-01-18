@@ -106,14 +106,14 @@ export class MenuService {
 
   private loadMenusFromStorage(): Menu[] {
     try {
-      return JSON.parse(sessionStorage.getItem(this.STORAGE_KEY) || '[]');
+      return JSON.parse(localStorage.getItem(this.STORAGE_KEY) || '[]');
     } catch {
       return [];
     }
   }
 
   private saveMenusToStorage(menus: Menu[]): void {
-    sessionStorage.setItem(this.STORAGE_KEY, JSON.stringify(menus));
+    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(menus));
   }
 
 }

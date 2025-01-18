@@ -11,6 +11,8 @@ import {MenuCategoryComponent} from '../menu-category/menu-category.component';
 import {Subject, takeUntil} from 'rxjs';
 import {FormsModule} from '@angular/forms';
 import {GroupedMenuItems} from '../../../interfaces/grouped-menu-items';
+import {MatDialog} from '@angular/material/dialog';
+import {MenuDialogComponent} from '../menu-dialog/menu-dialog.component';
 
 @Component({
   selector: 'app-menu-main',
@@ -29,7 +31,6 @@ export class MenuMainComponent implements OnInit, OnDestroy {
   menus: Menu[] = [];
   private destroy$ = new Subject<void>();
   searchMenuItem: string = '';
-  filteredMenus: Menu[] = [];
   groupedMenuItems: GroupedMenuItems[] = [];
 
 
@@ -43,7 +44,9 @@ export class MenuMainComponent implements OnInit, OnDestroy {
     },
   };
 
-  constructor(private menuService: MenuService, private readonly ngParticlesService: NgParticlesService) {
+  constructor(private menuService: MenuService,
+              private dialog: MatDialog,
+              private readonly ngParticlesService: NgParticlesService) {
   }
 
   ngOnInit(): void {
@@ -55,6 +58,8 @@ export class MenuMainComponent implements OnInit, OnDestroy {
     this.destroy$.next();
     this.destroy$.complete();
   }
+
+
   loadMenus(): void {
     this.menuService.filteredMenus$
       .pipe(takeUntil(this.destroy$))
@@ -64,11 +69,15 @@ export class MenuMainComponent implements OnInit, OnDestroy {
       });
   }
 
-  generateParticles(): void {
-     this.ngParticlesService.init(async (engine: Engine) => {
-      await loadSlim(engine);
-    });
+  openDialog(menu: Menu): void {
+    this.dialog.open(MenuDialogComponent, {
+      maxWidth: '100vw',
+      height: 'auto',
+      maxHeight: '100vh',
+      data: {menu: menu}
+    })
   }
+
 
   filterMenus() {
     if (this.searchMenuItem !== '') {
@@ -98,4 +107,10 @@ export class MenuMainComponent implements OnInit, OnDestroy {
       }))
       .sort((a, b) => a.category.localeCompare(b.category));
   }
+  generateParticles(): void {
+     this.ngParticlesService.init(async (engine: Engine) => {
+      await loadSlim(engine);
+    });
+  }
+
 }

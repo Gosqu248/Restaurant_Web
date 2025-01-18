@@ -5,7 +5,7 @@
 </ngx-particles>
 
 <div class="menu-container">
-    <h1 class="menu-title">Dostępne menu</h1>
+  <h1 class="menu-title">Dostępne menu</h1>
 
   <app-menu-category></app-menu-category>
 
@@ -21,7 +21,7 @@
     <div *ngFor="let group of groupedMenuItems" class="menu-group">
       <h3 class="category-title">{{group.category}}</h3>
       <div class="menu-item-container">
-          <div *ngFor="let menu of group.items" class="menu-item">
+          <div *ngFor="let menu of group.items" class="menu-item" (click)="openDialog(menu)">
             <app-menu-item [menu]="menu"></app-menu-item>
           </div>
         </div>

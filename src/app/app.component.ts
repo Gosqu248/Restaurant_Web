@@ -16,10 +16,6 @@ export class AppComponent implements OnInit{
   constructor(private menuService: MenuService) {
   }
   ngOnInit() {
-    const isMenusFetched = sessionStorage.getItem('isMenusFetched');
-    if (!isMenusFetched) {
-      this.menuService.fetchMenus();
-      sessionStorage.setItem('isMenusFetched', 'true');
-    }
+    this.menuService.fetchMenus();
   }
 }

@@ -10,7 +10,6 @@ registerLocaleData(localePl, 'pl');
   selector: 'app-menu-item',
   imports: [
     NgIf,
-    CurrencyPipe,
     CurrencyPLPipe
   ],
   templateUrl: './menu-item.component.html',

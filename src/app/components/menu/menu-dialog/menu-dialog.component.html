@@ -1,0 +1,15 @@
+  <mat-dialog-content class="menu-dialog-container">
+    <div class="menu-dialog-content">
+      <img [src]="menu.imageUrl" alt="Brak zdjęcia" class="menu-item-image">
+      <div class="menu-item-details">
+        <h2 mat-dialog-title>{{ menu.name }}</h2>
+        <p><strong>Kategoria:</strong> {{ menu.category }}</p>
+        <p><strong>Cena:</strong> {{ menu.price | currencyPL }}</p>
+        <p><strong>Składniki:</strong> {{ menu.ingredients || 'Nie zostały podane' }}</p>
+        <mat-dialog-actions align="end">
+          <button mat-button mat-dialog-close>Zamknij</button>
+          <button mat-button color="primary" (click)="onAddToCart()">Dodaj do karty</button>
+        </mat-dialog-actions>
+      </div>
+    </div>
+  </mat-dialog-content>
