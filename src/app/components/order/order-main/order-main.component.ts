@@ -3,20 +3,12 @@ import type {Engine, ISourceOptions} from '@tsparticles/engine';
 import configs from '@tsparticles/configs';
 import {NgParticlesService, NgxParticlesModule} from '@tsparticles/angular';
 import {loadSlim} from '@tsparticles/slim';
-import {HomeContactComponent} from '../../home/home-contact/home-contact.component';
-import {MenuCategoryComponent} from '../../menu/menu-category/menu-category.component';
-import {MenuItemComponent} from '../../menu/menu-item/menu-item.component';
-import {NgForOf} from '@angular/common';
 import {ReactiveFormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-order-main',
   imports: [
     NgxParticlesModule,
-    HomeContactComponent,
-    MenuCategoryComponent,
-    MenuItemComponent,
-    NgForOf,
     ReactiveFormsModule
   ],
   templateUrl: './order-main.component.html',

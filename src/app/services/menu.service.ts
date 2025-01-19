@@ -31,7 +31,9 @@ export class MenuService {
     shareReplay(1)
   );
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    this.fetchMenus();
+  }
 
   fetchMenus(): void {
     this.getAllMenus().pipe(
