@@ -5,7 +5,7 @@ import configs from '@tsparticles/configs';
 import {MenuService} from '../../../services/menu.service';
 import {NgParticlesService, NgxParticlesModule} from '@tsparticles/angular';
 import {loadSlim} from '@tsparticles/slim';
-import {NgForOf} from '@angular/common';
+import {NgForOf, NgStyle} from '@angular/common';
 import {MenuItemComponent} from '../menu-item/menu-item.component';
 import {MenuCategoryComponent} from '../menu-category/menu-category.component';
 import {Subject, takeUntil} from 'rxjs';
@@ -22,6 +22,7 @@ import {MenuDialogComponent} from '../menu-dialog/menu-dialog.component';
     MenuItemComponent,
     MenuCategoryComponent,
     FormsModule,
+    NgStyle,
   ],
   templateUrl: './menu-main.component.html',
   standalone: true,
@@ -32,6 +33,9 @@ export class MenuMainComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
   searchMenuItem: string = '';
   groupedMenuItems: GroupedMenuItems[] = [];
+  images: string[] = [];
+  currentImage: string = '';
+  currentImageIndex: number = 0;
 
 
   id = "tsparticles";
@@ -51,6 +55,8 @@ export class MenuMainComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loadMenus();
+    this.loadCategoriesImage();
+    this.startImagesSlideShow();
     this.generateParticles();
   }
 
@@ -69,6 +75,13 @@ export class MenuMainComponent implements OnInit, OnDestroy {
       });
   }
 
+  loadCategoriesImage() {
+    this.menuService.getImageFromCategories().subscribe((image) => {
+      this.images = image;
+      this.currentImage = this.images[0];
+    });
+  }
+
   openDialog(menu: Menu): void {
     this.dialog.open(MenuDialogComponent, {
       maxWidth: '100vw',
@@ -76,6 +89,13 @@ export class MenuMainComponent implements OnInit, OnDestroy {
       maxHeight: '100vh',
       data: {menu: menu}
     })
+  }
+
+  startImagesSlideShow(): void {
+    setInterval(() => {
+      this.currentImageIndex = (this.currentImageIndex + 1) % this.images.length;
+      this.currentImage = this.images[this.currentImageIndex];
+    }, 3000);
   }
 
 

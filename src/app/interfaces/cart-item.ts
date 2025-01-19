@@ -1,5 +1,6 @@
+import {Menu} from './menu';
+
 export interface CartItem {
-  menus: Menu[];
+  menu: Menu;
   quantity: number;
-  totalPrice: number;
 }

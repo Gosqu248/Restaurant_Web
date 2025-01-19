@@ -8,10 +8,33 @@
   top: 10vh;
   max-width: 1000px;
   background: rgba(255, 255, 255, 0.6);
-  padding: 5px 0 30px 0;
+  padding: 0 0 30px 0;
   position: relative;
   margin: 0 auto;
   border-radius: 10px;
+}
+
+.backgroundImages {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 10px 10px 0 0;
+  height: 400px;
+  margin: 0;
+  padding: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: background-image 1s ease-in-out;
+}
+
+.text-background {
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-self: center;
+  height: 70px;
+  color: white;
+  border-radius: 0 0 10px 10px;
 }
 
 .menu-title {
@@ -27,9 +50,7 @@
   background: linear-gradient(90deg, #fd5b3d, #feb47b);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-
   animation: fadeInUp 1.5s ease-in-out;
 
   &::after {
@@ -58,6 +79,7 @@
   width: 80%;
   height: 60px;
   outline: none;
+  margin-top: 10px;
   padding: 0 20px;
   font-size: 16px;
   border-radius: 40px 40px 40px 40px;
@@ -87,7 +109,6 @@
   margin: 0;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
   transition: transform 0.3s ease-in-out;
-
 }
 
 .menu-item-container {

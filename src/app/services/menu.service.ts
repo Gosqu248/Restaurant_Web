@@ -62,6 +62,14 @@ export class MenuService {
     );
   }
 
+  getImageFromCategories() {
+    return this.categories$.pipe(
+      map(categories => categories
+        .filter(category => category.imageUrl !== '')
+        .map(category => category.imageUrl))
+    )
+  }
+
   private getAllMenus(): Observable<Menu[]> {
     return this.http.get<Menu[]>(`${this.apiUrl}/getAll`);
   }

@@ -9,6 +9,8 @@ import {
 import {Menu} from '../../../interfaces/menu';
 import {MatButton} from '@angular/material/button';
 import {CurrencyPLPipe} from '../../../pipes/currency-pl.pipe';
+import {CartService} from '../../../services/cart.service';
+import {CartItem} from '../../../interfaces/cart-item';
 
 @Component({
   selector: 'app-menu-dialog',
@@ -30,18 +32,19 @@ export class MenuDialogComponent implements OnInit {
   quantity: number = 1;
 
   constructor(private dialogRef: MatDialogRef<MenuDialogComponent>,
+              private cartService: CartService,
               @Inject(MAT_DIALOG_DATA) public data: { menu: Menu}) { }
 
   ngOnInit() {
     this.menu = this.data.menu;
   }
 
-  closeDialog() {
-    this.dialogRef.close();
-  }
-
   onAddToCart(): void {
-    // Implement your add to cart logic here
+    const cartItem: CartItem = {
+      menu: this.menu,
+      quantity: this.quantity
+    }
+    this.cartService.addToCart(cartItem);
     this.dialogRef.close();
   }
 

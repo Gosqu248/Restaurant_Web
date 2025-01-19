@@ -5,9 +5,12 @@
 </ngx-particles>
 
 <div class="menu-container">
-  <h1 class="menu-title">Dostępne menu</h1>
-
+ <div class="backgroundImages" [ngStyle]="{'background-image': 'url('+ currentImage +')'}" >
+   <div class="text-background">
+    <h1 class="menu-title">Dostępne menu</h1>
+   </div>
   <app-menu-category></app-menu-category>
+ </div>
 
   <input
     type="text"
