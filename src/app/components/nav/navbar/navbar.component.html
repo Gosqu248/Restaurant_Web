@@ -5,7 +5,13 @@
       <a routerLink="/">Restauracja</a>
     </div>
 
+
     <div class="desktop-menu">
+      <button *ngIf="cart.length > 0" class="cart-button">
+        <i class="fas fa-shopping-cart"></i>
+        <span>{{cart.length}} pozycji za {{totalPrice | currencyPL}}</span>
+        <i class="fas fa-chevron-down"></i>
+      </button>
       <a routerLink="/">Strona główna</a>
       <a routerLink="/menu">Menu</a>
       <a *ngIf="!isAuth" routerLink="/auth" class="login-button">Zaloguj się</a>

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {CartItem} from '../interfaces/cart-item';
 import {BehaviorSubject} from 'rxjs';
 
@@ -6,13 +6,10 @@ import {BehaviorSubject} from 'rxjs';
   providedIn: 'root'
 })
 export class CartService {
-  private readonly STORAGE_KEY = 'cart';
 
   private readonly cart: BehaviorSubject<CartItem[]> = new BehaviorSubject<CartItem[]>(this.loadCartFromStorage());
-  readonly cart$ = this.cart.asObservable();
-
-  private readonly totalPrice: BehaviorSubject<number> = new BehaviorSubject<number>(0);
-  readonly totalPrice$ = this.totalPrice.asObservable();
+  private readonly totalPrice: BehaviorSubject<number> = new BehaviorSubject<number>(this.calculateTotalPrice(this.getCart()));
+  totalPrice$ = this.totalPrice.asObservable();
 
   constructor() { }
 
@@ -25,7 +22,7 @@ export class CartService {
       cart.push(item);
     }
     this.cart.next(cart);
-    console.log(this.cart.getValue());
+    this.totalPrice.next(this.calculateTotalPrice(cart));
     this.saveCartToStorage(cart);
   }
 
@@ -35,21 +32,21 @@ export class CartService {
 
   clearCart(): void {
     this.cart.next([]);
+    this.totalPrice.next(0);
     this.saveCartToStorage([]);
   }
 
-  calculateTotalPrice(): void {
-    const cart = this.cart.getValue();
-    const total = cart.reduce((acc, item) => acc + item.menu.price * item.quantity, 0);
-    this.totalPrice.next(total);
+  private calculateTotalPrice(cart: CartItem[]) {
+    return cart.reduce((total, item) => total + (item.menu.price * item.quantity), 0);
   }
 
+
   private loadCartFromStorage(): CartItem[] {
-    const cart = localStorage.getItem('STORAGE_KEY');
+    const cart = localStorage.getItem('cart');
     return cart ? JSON.parse(cart) : [];
   }
 
   private saveCartToStorage(cart: CartItem[]): void {
-    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(cart));
+    localStorage.setItem('cart', JSON.stringify(cart));
   }
 }
