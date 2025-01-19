@@ -12,8 +12,8 @@
     (click)="filterMenu(category)"
     [class.active]="selectedCategory === category"
     class="category-button">
-      <img [src]="category.imageUrl" [alt]="category.name" class="category-image">
       <span>{{category.name}}</span>
+      <img *ngIf="category.imageUrl" [src]="category.imageUrl" [alt]="category.name" class="category-image">
     </button>
   </div>
 

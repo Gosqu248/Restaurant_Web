@@ -8,8 +8,11 @@
     align-items: center;
     justify-content: center;
     gap: 20px;
+    min-width: 700px;
 
     .menu-item-image {
+      display: flex;
+      align-self: center;
       width: 100%;
       max-width: 400px;
       height: 400px;
@@ -68,10 +71,15 @@ button {
   .menu-dialog-container {
     padding: 0;
     height: 1000px;
+    min-width: 100%;;
+    min-height: 90vh;
+    bottom: 0;
+
   }
 
   .menu-dialog-container .menu-dialog-content {
     flex-direction: column;
+    min-width: 100%;
   }
 
   button {
