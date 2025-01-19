@@ -26,9 +26,35 @@ export class CartService {
     this.saveCartToStorage(cart);
   }
 
+  addOneToCart(item: CartItem): void {
+    const cart = this.cart.getValue();
+    const existingItem = cart.find(i => i.menu === item.menu);
+    if (existingItem) {
+      existingItem.quantity += 1;
+    }
+    this.cart.next(cart);
+    this.totalPrice.next(this.calculateTotalPrice(cart));
+    this.saveCartToStorage(cart);
+  }
+
+  removeOneFromCart(item: CartItem): void {
+    const cart = this.cart.getValue();
+    const existingItem = cart.find(i => i.menu === item.menu);
+    if (existingItem) {
+      existingItem.quantity -= 1;
+      if (existingItem.quantity === 0) {
+        cart.splice(cart.indexOf(existingItem), 1);
+      }
+    }
+    this.cart.next(cart);
+    this.totalPrice.next(this.calculateTotalPrice(cart));
+    this.saveCartToStorage(cart);
+  }
+
   getCart(): CartItem[] {
     return this.cart.getValue();
   }
+
 
   clearCart(): void {
     this.cart.next([]);

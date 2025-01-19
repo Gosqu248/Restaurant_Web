@@ -7,6 +7,7 @@ import {UserMenuMainComponent} from '../../user-menu/user-menu-main/user-menu-ma
 import {CartService} from '../../../services/cart.service';
 import {CartItem} from '../../../interfaces/cart-item';
 import {CurrencyPLPipe} from '../../../pipes/currency-pl.pipe';
+import {BasketMainComponent} from '../../basket/basket-main/basket-main.component';
 
 @Component({
   selector: 'app-navbar',
@@ -51,7 +52,16 @@ export class NavbarComponent implements OnInit{
       panelClass: 'centered-dialog',
       disableClose: false,
       autoFocus: true,
+    })
+  }
 
+  openBasketDialog() {
+    this.dialog.open(BasketMainComponent, {
+      width: '600px',
+      height: 'auto',
+      panelClass: 'centered-dialog',
+      disableClose: false,
+      autoFocus: true,
     })
   }
 }

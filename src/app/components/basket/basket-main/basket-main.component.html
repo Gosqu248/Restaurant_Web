@@ -1,0 +1,16 @@
+<div class="basket-container">
+  <h2>Koszyk</h2>
+
+  <div class="basket">
+       <div class="basket-item" *ngFor="let item of cart">
+          <app-basket-item [item]="item"></app-basket-item>
+       </div>
+  </div>
+</div>
+<div class="total-price">
+  <button mat-flat-button color="orange">
+    <p>Przejdź do zamówienia</p>
+    <mat-icon>keyboard_arrow_right</mat-icon>
+  </button>
+  <h3>Razem: {{ totalPrice | currencyPL }}</h3>
+</div>
