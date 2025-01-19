@@ -13,6 +13,7 @@ import {FormsModule} from '@angular/forms';
 import {GroupedMenuItems} from '../../../interfaces/grouped-menu-items';
 import {MatDialog} from '@angular/material/dialog';
 import {MenuDialogComponent} from '../menu-dialog/menu-dialog.component';
+import {HomeContactComponent} from '../../home/home-contact/home-contact.component';
 
 @Component({
   selector: 'app-menu-main',
@@ -23,6 +24,7 @@ import {MenuDialogComponent} from '../menu-dialog/menu-dialog.component';
     MenuCategoryComponent,
     FormsModule,
     NgStyle,
+    HomeContactComponent,
   ],
   templateUrl: './menu-main.component.html',
   standalone: true,
