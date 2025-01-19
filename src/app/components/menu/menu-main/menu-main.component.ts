@@ -45,7 +45,7 @@ export class MenuMainComponent implements OnInit, OnDestroy {
     ...configs.snow,
     background: {
       color: {
-        value: "#faa86f"
+        value: "transparent" // Tło przezroczyste
       }
     },
   };

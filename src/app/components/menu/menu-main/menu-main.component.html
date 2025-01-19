@@ -1,8 +1,9 @@
-<ngx-particles
-  [id]="id"
-  [options]="particlesOptions"
-  class="container">
-</ngx-particles>
+<div class="particles-container">
+  <ngx-particles
+    [id]="id"
+    [options]="particlesOptions"
+    class="container">
+  </ngx-particles>
 
 <div class="menu-container">
  <div class="backgroundImages" [ngStyle]="{'background-image': 'url('+ currentImage +')'}" >
@@ -32,5 +33,4 @@
     </div>
   <app-home-contact></app-home-contact>
 </div>
-
-
+</div>

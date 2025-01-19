@@ -1,7 +1,17 @@
-.container {
+.particles-container {
   position: relative;
+  width: 100%;
   min-height: 100vh;
   height: 100%;
+  background: radial-gradient(circle at center, var(--color-orange-600), var(--color-orange-300), #f4c595, var(--color-orange-300), var(--color-orange-600));
+}
+
+ngx-particles {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
 }
 
 .menu-container {

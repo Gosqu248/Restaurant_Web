@@ -8,7 +8,7 @@ $dark-gray: #333333;
   min-height: 100vh;
   height: 100%;
   width: 100%;
-  background-color: #1a1a1a;
+  background: radial-gradient(circle, $primary-orange 0%, $dark-gray 100%);
   display: flex;
   justify-content: center;
   padding-bottom: 100vh;
