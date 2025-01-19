@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {NgIf} from '@angular/common';
-import {RouterLink} from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import {AuthService} from '../../../services/auth.service';
 import {MatDialog} from '@angular/material/dialog';
 import {UserMenuMainComponent} from '../../user-menu/user-menu-main/user-menu-main.component';
@@ -28,6 +28,7 @@ export class NavbarComponent implements OnInit{
 
   constructor(protected authService: AuthService,
               private cartService: CartService,
+              private router: Router,
               private dialog: MatDialog) {
     this.authService.isAuthenticated$.subscribe(isAuth => {
       this.isAuth = isAuth;
@@ -43,6 +44,10 @@ export class NavbarComponent implements OnInit{
 
   toggleMenu(): void {
     this.isMenuOpen = !this.isMenuOpen;
+  }
+
+  getCurrentRoute(): string {
+    return this.router.url
   }
 
   openMenuDialog() {

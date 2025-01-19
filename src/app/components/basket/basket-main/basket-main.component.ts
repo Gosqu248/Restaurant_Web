@@ -6,13 +6,13 @@ import {CurrencyPLPipe} from '../../../pipes/currency-pl.pipe';
 import {MatButton, MatIconButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 import {BasketItemComponent} from '../basket-item/basket-item.component';
+import {MatDialogRef} from '@angular/material/dialog';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-basket-main',
   imports: [
-    NgIf,
     CurrencyPLPipe,
-    MatIconButton,
     MatIcon,
     NgForOf,
     BasketItemComponent,
@@ -25,7 +25,9 @@ export class BasketMainComponent implements OnInit{
   cart: CartItem[] = [];
   totalPrice: number = 0;
 
-  constructor(private cartService: CartService) {
+  constructor(private cartService: CartService,
+              private router: Router,
+              public dialogRef: MatDialogRef<BasketMainComponent>) {
   }
 
   ngOnInit() {
@@ -33,6 +35,11 @@ export class BasketMainComponent implements OnInit{
     this.cartService.totalPrice$.subscribe(totalPrice => {
       this.totalPrice = totalPrice;
     });
+  }
+
+  goToOrder() {
+    this.dialogRef.close();
+    this.router.navigate(['/order']);
   }
 
 }

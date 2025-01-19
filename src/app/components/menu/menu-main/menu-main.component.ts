@@ -14,6 +14,10 @@ import {GroupedMenuItems} from '../../../interfaces/grouped-menu-items';
 import {MatDialog} from '@angular/material/dialog';
 import {MenuDialogComponent} from '../menu-dialog/menu-dialog.component';
 import {HomeContactComponent} from '../../home/home-contact/home-contact.component';
+import {CartItem} from '../../../interfaces/cart-item';
+import {CartService} from '../../../services/cart.service';
+import {BasketMainComponent} from '../../basket/basket-main/basket-main.component';
+import {CurrencyPLPipe} from '../../../pipes/currency-pl.pipe';
 
 @Component({
   selector: 'app-menu-main',
@@ -25,6 +29,7 @@ import {HomeContactComponent} from '../../home/home-contact/home-contact.compone
     FormsModule,
     NgStyle,
     HomeContactComponent,
+    CurrencyPLPipe,
   ],
   templateUrl: './menu-main.component.html',
   standalone: true,
@@ -38,7 +43,8 @@ export class MenuMainComponent implements OnInit, OnDestroy {
   images: string[] = [];
   currentImage: string = '';
   currentImageIndex: number = 0;
-
+  cart: CartItem[] = [];
+  totalPrice: number = 0;
 
   id = "tsparticles";
   particlesOptions: ISourceOptions = {
@@ -52,12 +58,17 @@ export class MenuMainComponent implements OnInit, OnDestroy {
 
   constructor(private menuService: MenuService,
               private dialog: MatDialog,
+              private cartService: CartService,
               private readonly ngParticlesService: NgParticlesService) {
   }
 
   ngOnInit(): void {
     this.loadMenus();
     this.loadCategoriesImage();
+    this.cart = this.cartService.getCart();
+    this.cartService.totalPrice$.subscribe(totalPrice => {
+      this.totalPrice = totalPrice;
+    });
     this.startImagesSlideShow();
     this.generateParticles();
   }
@@ -135,4 +146,13 @@ export class MenuMainComponent implements OnInit, OnDestroy {
     });
   }
 
+  openBasketDialog() {
+    this.dialog.open(BasketMainComponent, {
+      width: '600px',
+      height: 'auto',
+      panelClass: 'centered-dialog',
+      disableClose: false,
+      autoFocus: true,
+    })
+  }
 }
