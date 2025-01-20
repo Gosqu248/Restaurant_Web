@@ -39,7 +39,7 @@ export class BasketMainComponent implements OnInit{
 
   goToOrder() {
     this.dialogRef.close();
-    this.router.navigate(['/order']);
+    this.router.navigate(['/checkout']);
   }
 
 }

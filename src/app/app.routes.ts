@@ -23,7 +23,15 @@ export const routes: Routes = [
     loadComponent: () => import('./components/menu/menu-main/menu-main.component').then(m => m.MenuMainComponent)
   },
   {
-    path: 'order',
+    path: 'checkout',
     loadComponent: () => import('./components/order/order-main/order-main.component').then(m => m.OrderMainComponent)
+  },
+  {
+    path: 'orders-history',
+    loadComponent: () => import('./components/user-orders/order-history-main/order-history-main.component').then(m => m.OrderHistoryMainComponent)
+  },
+  {
+    path: 'payment-confirmation',
+    loadComponent: () => import('./components/payment-confirmation/payment-confirmation.component').then(m => m.PaymentConfirmationComponent)
   }
 ];

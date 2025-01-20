@@ -26,9 +26,11 @@ export class RestaurantInfoService {
 
   private selectedPayment: BehaviorSubject<PaymentMethod> = new BehaviorSubject<PaymentMethod>(this.paymentMethods[0]);
   private selectedHour: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null)
+  private comment: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
   selectedPayment$ = this.selectedPayment.asObservable();
   selectedHour$ = this.selectedHour.asObservable();
+  comment$ = this.comment.asObservable();
 
 
   constructor() { }
@@ -38,7 +40,6 @@ export class RestaurantInfoService {
 
   getCurrentOpeningHours(): DeliveryHour | undefined {
     const currentDay = new Date().getDay();
-    console.log(this.deliveryHours.find(hour => hour.dayOfWeek === currentDay));
     return this.deliveryHours.find(hour => hour.dayOfWeek === currentDay);
   }
 
@@ -48,6 +49,10 @@ export class RestaurantInfoService {
 
   setSelectedHour(hour: string | null) {
     this.selectedHour.next(hour);
+  }
+
+  setComment(comment: string) {
+    this.comment.next(comment);
   }
 
 }

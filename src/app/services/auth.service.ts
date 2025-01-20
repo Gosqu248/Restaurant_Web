@@ -11,7 +11,7 @@ import {User, UserDTO} from '../interfaces/user';
 export class AuthService {
   private apiUrl = environment.api + '/api/auth';
 
-  private userDataSubject = new BehaviorSubject<UserDTO | null>(null);
+  private userDataSubject = new BehaviorSubject<UserDTO>({} as UserDTO);
   public userData$ = this.userDataSubject.asObservable();
 
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
@@ -121,7 +121,7 @@ export class AuthService {
       localStorage.removeItem('jwt');
       localStorage.removeItem('name');
       localStorage.removeItem('email');
-      this.userDataSubject.next(null);
+      this.userDataSubject.next({} as UserDTO);
       this.isAuthenticatedSubject.next(false);
     }
   }
