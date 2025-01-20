@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import {environment} from '../../enviorments/environment';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Order} from "../interfaces/order";
+import {Observable} from "rxjs";
 
 
 @Injectable({
@@ -11,7 +13,11 @@ export class OrderService {
 
   constructor(private http: HttpClient) { }
 
-  createOrder(order: any) {
+  getUserOrders(token: string) {
+    const headers = new HttpHeaders().set("Authorization", `Bearer ${token}`);
+    return this.http.get<Order[]>(`${this.apiUrl}/getUserOrders`, {headers});
+  }
+  createOrder(order: Order) {
     return this.http.post(`${this.apiUrl}/createOrder`, order);
   }
 

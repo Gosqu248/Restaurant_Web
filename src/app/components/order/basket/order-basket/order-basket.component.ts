@@ -49,26 +49,26 @@ export class OrderBasketComponent implements OnInit {
     this.infoService.selectedPayment$.subscribe(payment => this.selectedPayment = payment)
     this.infoService.comment$.subscribe(comment => this.comment = comment)
     this.authService.userData$.subscribe(userData => this.userData = userData)
-    console.log(this.cart)
   }
   canOrder(): boolean {
     return !!(this.isAuth && this.selectedHour)
   }
 
   orderAccepted() {
+
     const order: Order = {
-      paymentMethod: this.selectedPayment?.method || '',
       status: OrderStatus.niezapłacone,
       totalPrice: parseFloat(this.totalPrice.toFixed(2)),
       deliveryTime: this.selectedHour || '',
       comment: this.comment,
+      paymentId: null,
+      paymentMethod: this.selectedPayment?.method || '',
       orderMenus: this.cart,
       user: this.userData,
-      paymentId: null
     }
 
     if (this.selectedPayment?.method === 'Gotówka') {
-        this.orderService.createOrder(order);
+        this.orderService.createOrder(order).subscribe(() => {});
         this.cartService.clearCart();
         setTimeout(() => {
           this.router.navigate(['/orders-history'])

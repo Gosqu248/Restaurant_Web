@@ -28,7 +28,7 @@ export const routes: Routes = [
   },
   {
     path: 'orders-history',
-    loadComponent: () => import('./components/user-orders/order-history-main/order-history-main.component').then(m => m.OrderHistoryMainComponent)
+    loadComponent: () => import('./components/user-orders/history/order-history-main/order-history-main.component').then(m => m.OrderHistoryMainComponent)
   },
   {
     path: 'payment-confirmation',
