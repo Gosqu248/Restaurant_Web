@@ -1,0 +1,21 @@
+.name {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.name h4, .name h5, .name p {
+  font-size: 15px;
+  margin: 10px 5px;
+}
+
+.name h5 {
+  flex-grow: 1;
+  text-decoration: underline;
+  margin: 10px 0;
+}
+
+.name p {
+  width: 30%;
+  text-align: center;
+}

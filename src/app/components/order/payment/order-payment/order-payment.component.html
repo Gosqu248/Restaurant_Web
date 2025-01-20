@@ -1,0 +1,10 @@
+<div class="container">
+  <h3>Płatności</h3>
+  <div class="payment" *ngIf="selectedPayment">
+    <div class="main">
+      <img [src]="selectedPayment.image" alt="{{selectedPayment.method}}"/>
+      <p>{{selectedPayment.method}}</p>
+    </div>
+    <button (click)="openEditDialog()">Edytuj</button>
+  </div>
+</div>

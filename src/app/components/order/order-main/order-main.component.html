@@ -4,4 +4,16 @@
             [options]="particlesOptions"
             class="container">
     </ngx-particles>
+
+  <div class="order-container">
+    <div class="left-container">
+      <app-order-login *ngIf="!isAuth"></app-order-login>
+      <app-order-choose-hour></app-order-choose-hour>
+      <app-order-payment></app-order-payment>
+      <app-order-comment></app-order-comment>
+    </div>
+    <div class="basket">
+      <app-order-basket [isAuth]="isAuth"></app-order-basket>
+    </div>
+  </div>
 </div>

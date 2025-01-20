@@ -1,0 +1,15 @@
+<div class="container">
+  <h2>Wybierz godzinę odbioru</h2>
+  <div class="hour-options">
+    <button *ngFor="let hour of availableHours"
+            [class.selected]="hour === selectedHour"
+            (click)="selectHour(hour)">
+      {{ hour }}
+    </button>
+  </div>
+  <mat-dialog-actions align="end" class="actions">
+    <button mat-stroked-button mat-dialog-close>Zamknij</button>
+    <button mat-flat-button color="primary" (click)="confirmSelection()">Potwierdź</button>
+  </mat-dialog-actions>
+</div>
+

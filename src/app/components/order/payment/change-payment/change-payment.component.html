@@ -1,0 +1,11 @@
+<div class="first-section">
+  <h2>Metody płatności</h2>
+  <i class="fa-regular fa-circle-xmark" (click)="closeDialog()"></i>
+</div>
+
+<div class="payment-container">
+  <div class="payment-item" *ngFor="let payment of paymentMethods">
+    <app-payment-item [payment]="payment"></app-payment-item>
+  </div>
+</div>
+

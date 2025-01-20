@@ -1,0 +1,27 @@
+<div class="option">
+  <h3>Zaplanuj odbiór</h3>
+  <div class="item" [ngClass]="{'selected': isDeliveryOptionSelected('fastest')}" (click)="setDelivery('fastest')">
+    <div class="main-item">
+      <mat-icon>hourglass_empty</mat-icon>
+      <div class="text">
+        <h3>Jak najszybciej</h3>
+        <p *ngIf="deliveryOption === 'pickup'">{{pickUpTimeMin}}-{{pickUpTimeMax}}min</p>
+      </div>
+    </div>
+    <div class="icon-background" *ngIf="isDeliveryOptionSelected('fastest')">
+      <i class="fa-solid fa-check"></i>
+    </div>
+  </div>
+  <div class="item" [ngClass]="{'selected': isDeliveryOptionSelected('scheduled')}" (click)="setDelivery('scheduled')">
+    <div class="main-item">
+      <i class="fa-solid fa-calendar-days"></i>
+      <div class="text">
+        <h3>Zaplanuj</h3>
+        <p>{{selectedHour ? selectedHour : 'Wybierz godzinę'}}</p>
+      </div>
+    </div>
+    <div class="icon-background" *ngIf="isDeliveryOptionSelected('scheduled')">
+      <i class="fa-solid fa-check"></i>
+    </div>
+  </div>
+</div>

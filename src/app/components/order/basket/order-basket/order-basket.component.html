@@ -1,0 +1,24 @@
+<div class="basket-container">
+
+  <ng-container>
+    <div class="cart-container">
+      <app-order-basket-item
+        *ngFor="let item of cart"
+        [cartItem]="item"
+        class="order-item"
+      ></app-order-basket-item>
+    </div>
+
+    <div class="summary-container">
+      <div class="total">
+        <h3>Kwota całkowita</h3>
+        <h3>{{totalPrice | currencyPL }}</h3>
+      </div>
+
+    </div>
+
+    <button (click)="orderAccepted()" [ngClass]="{'invalid': !canOrder()}" [disabled]="!canOrder()">Zamawiam</button>
+
+  </ng-container>
+
+</div>
