@@ -23,6 +23,10 @@
   align-items: center;
   justify-content: space-between;
   margin: 0 50px 10px 50px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 }
 
 .main {
@@ -55,6 +59,11 @@ button {
   cursor: pointer;
   font-weight: bolder;
   margin-bottom: 20px;
+
+  @media (max-width: 768px) {
+    width: 80%;
+
+  }
 }
 
 button:hover {

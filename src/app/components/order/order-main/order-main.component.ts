@@ -29,7 +29,6 @@ import {OrderBasketComponent} from '../basket/order-basket/order-basket.componen
 })
 export class OrderMainComponent implements OnInit {
   isAuth: boolean = false;
-  canOrder: boolean = false;
 
   id = "tsparticles";
   particlesOptions: ISourceOptions = {

@@ -46,7 +46,9 @@ export class OrderChooseHourComponent implements OnInit{
     const dialogRef = this.dialog.open(ChooseHourDialogComponent, {
       width: '700px',
       maxWidth: '100%',
-      height: '600px'
+      height: 'auto',
+      maxHeight: '100%',
+
     });
 
     dialogRef.afterClosed().subscribe(result => {
