@@ -1,0 +1,21 @@
+<div class="particles-container">
+  <ngx-particles
+    [id]="id"
+    [options]="particlesOptions"
+    class="container">
+  </ngx-particles>
+
+  <div class="menus-container">
+    <div class="text">
+      <h2>Dostępne menu</h2>
+    </div>
+
+    <app-all-menus-item
+      class="menus-items"
+      *ngFor="let menu of menus"
+      [menu]="menu">
+
+    </app-all-menus-item>
+
+  </div>
+</div>

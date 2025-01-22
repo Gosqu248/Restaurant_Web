@@ -1,0 +1,9 @@
+<img [src]="menu.imageUrl" alt=""/>
+<div class="column1">
+  <h3>{{menu.name}}</h3>
+  <p>{{menu.category}}</p>
+</div>
+<div class="column2">
+  <button class="edit" (click)="editMenu()">Edytuj</button>
+  <button class="remove" (click)="deleteMenu()">Usuń</button>
+</div>

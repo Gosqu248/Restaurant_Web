@@ -1,23 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgForOf, NgIf } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
-import { MenuService } from '../../../services/menu.service';
-
-declare let particlesJS: any;
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import {MenuService} from '../../../../services/menu.service';
 
 @Component({
-  selector: 'app-add-menu',
-  templateUrl: './add-menu.component.html',
+  selector: 'app-edit-menu',
+  templateUrl: './edit-menu.component.html',
   standalone: true,
   imports: [
     ReactiveFormsModule,
     NgForOf,
     NgIf
   ],
-  styleUrls: ['./add-menu.component.scss']
+  styleUrls: ['./edit-menu.component.scss']
 })
-export class AddMenuComponent implements OnInit {
+export class EditMenuComponent implements OnInit {
   menuForm: FormGroup;
   previewImage: string | ArrayBuffer | null | undefined = null;
 
@@ -36,7 +34,8 @@ export class AddMenuComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private menuService: MenuService,
-    private http: HttpClient
+    public dialogRef: MatDialogRef<EditMenuComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.menuForm = this.fb.group({
       name: ['', Validators.required],
@@ -49,9 +48,16 @@ export class AddMenuComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.http.get('assets/config/particlesjs-config.json').subscribe((config) => {
-      particlesJS('particles-js', config);
-    });
+    if (this.data) {
+      this.menuForm.patchValue({
+        name: this.data.name,
+        category: this.data.category,
+        ingredients: this.data.ingredients,
+        price: this.data.price,
+        imageUrl: this.data.imageUrl.startsWith('blob:') ? '' : this.data.imageUrl
+      });
+      this.previewImage = this.data.imageUrl || null;
+    }
   }
 
   onImageSelected(event: any): void {
@@ -85,17 +91,15 @@ export class AddMenuComponent implements OnInit {
         formData.append('image', imageFile);
       }
 
-      this.menuService.addMenu(formData).subscribe({
+      this.menuService.updateMenu(this.data.id, formData).subscribe({
         next: () => {
           this.menuService.fetchMenus();
-          this.menuForm.reset();
-          this.previewImage = null;
+          this.dialogRef.close();
         },
         error: (error) => {
-          console.error('Error adding menu', error);
+          console.error('Error updating menu', error);
         }
       });
     }
   }
-
 }

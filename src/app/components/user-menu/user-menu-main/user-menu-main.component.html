@@ -5,12 +5,17 @@
   </div>
 
   <div class="menu-item" *ngIf="userData?.role === 'admin'" (click)="goToOrderMonitor()">
-    <i class="fa-solid fa-user"></i>
+    <i class="fa-solid fa-eye"></i>
     <h3>Monitorowanie Zamówień</h3>
   </div>
 
+  <div class="menu-item" *ngIf="userData?.role === 'admin'" (click)="goToAllMenus()">
+    <i class="fa-solid fa-list"></i>
+    <h3>Dostępne menu</h3>
+  </div>
+
   <div class="menu-item" *ngIf=" userData?.role === 'admin'" (click)="goToAddMenu()">
-    <i class="fa-solid fa-user"></i>
+    <i class="fa-solid fa-plus"></i>
     <h3>Dodaj produkt do menu</h3>
   </div>
 

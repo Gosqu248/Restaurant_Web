@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {environment} from '../../enviorments/environment';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {BehaviorSubject, catchError, forkJoin, map, Observable, of, shareReplay, switchMap} from 'rxjs';
 import {Menu} from '../interfaces/menu';
 import {Category} from '../interfaces/category';
@@ -15,6 +15,7 @@ export class MenuService {
   private readonly menus: BehaviorSubject<Menu[]> = new BehaviorSubject<Menu[]>(this.loadMenusFromStorage());
   private selectedCategory: BehaviorSubject<Category | null> = new BehaviorSubject<Category | null>(null);
 
+  readonly menus$ = this.menus.asObservable();
   readonly filteredMenus$ = this.menus.pipe(
     switchMap(menus => this.selectedCategory.pipe(
       map(category => category
@@ -55,12 +56,17 @@ export class MenuService {
     }
   }
   addMenu(menuData: FormData): Observable<Menu> {
-    return this.http.post<Menu>(`${this.apiUrl}/add`, menuData).pipe(
-      switchMap(() => {
-        this.fetchMenus()
-        return of();
-      })
-    );
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('jwt')}`);
+    return this.http.post<Menu>(`${this.apiUrl}/add`, menuData, {headers});
+  }
+  updateMenu(id: number, formData: FormData) {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('jwt')}`);
+    return this.http.put<Menu>(`${this.apiUrl}/update/${id}`, formData, {headers});
+  }
+
+  deleteMenu(id: number): Observable<void> {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('jwt')}`);
+    return this.http.put<void>(`${this.apiUrl}/delete/${id}`, {headers});
   }
 
   getImageFromCategories() {
@@ -70,6 +76,7 @@ export class MenuService {
         .map(category => category.imageUrl))
     )
   }
+
 
   findMenuById(id: number): Menu | null {
     return this.menus.getValue().find(menu => menu.id === id) || null;
@@ -128,5 +135,10 @@ export class MenuService {
   private saveMenusToStorage(menus: Menu[]): void {
     localStorage.setItem(this.STORAGE_KEY, JSON.stringify(menus));
   }
+
+  clearStorage() {
+    localStorage.removeItem(this.STORAGE_KEY);
+  }
+
 
 }

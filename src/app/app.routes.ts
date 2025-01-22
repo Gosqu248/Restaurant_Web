@@ -40,5 +40,10 @@ export const routes: Routes = [
     path: 'order-monitoring',
     loadComponent: () => import('./components/admin/order-monitoring/order-monitoring-main/order-monitoring-main.component').then(m => m.OrderMonitoringMainComponent),
     canActivate: [adminGuard]
+  },
+  {
+    path: 'all-menus',
+    loadComponent: () => import('./components/admin/all-menus/all-menus-main/all-menus-main.component').then(m => m.AllMenusMainComponent),
+    canActivate: [adminGuard]
   }
 ];

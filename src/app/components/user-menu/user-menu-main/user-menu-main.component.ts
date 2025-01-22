@@ -83,4 +83,9 @@ export class UserMenuMainComponent implements OnInit{
     this.dialog.closeAll();
     this.router.navigate(['/add-menu']);
   }
+
+  goToAllMenus() {
+    this.dialog.closeAll();
+    this.router.navigate(['/all-menus']);
+  }
 }
