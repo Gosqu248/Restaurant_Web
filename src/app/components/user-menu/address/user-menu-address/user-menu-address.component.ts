@@ -66,7 +66,9 @@ export class UserMenuAddressComponent implements OnInit{
 
   openAddAddressDialog() {
     this.closeDialog();
-    this.dialog.open(UserMenuAddAddressComponent);
+    this.dialog.open(UserMenuAddAddressComponent, {
+      data: { isEditMode: false },
+    });
   }
 
   goToChangeAddress() {

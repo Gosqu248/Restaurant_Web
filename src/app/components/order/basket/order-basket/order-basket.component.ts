@@ -5,7 +5,7 @@ import {CurrencyPLPipe} from '../../../../pipes/currency-pl.pipe';
 import {OrderBasketItemComponent} from '../order-basket-item/order-basket-item.component';
 import {CartItem} from '../../../../interfaces/cart-item';
 import {RestaurantInfoService} from '../../../../services/restaurant-info.service';
-import {Order, OrderStatus} from '../../../../interfaces/order';
+import {Order, OrderMenu, OrderStatus} from '../../../../interfaces/order';
 import {PaymentMethod, PaymentResponse} from '../../../../interfaces/payment-method';
 import {AuthService} from '../../../../services/auth.service';
 import {UserDTO} from '../../../../interfaces/user';
@@ -55,6 +55,12 @@ export class OrderBasketComponent implements OnInit {
   }
 
   orderAccepted() {
+    const orderMenus: OrderMenu[] = this.cart.map(item => {
+      return {
+        menuId: item.menu.id,
+        quantity: item.quantity
+      }
+    })
 
     const order: Order = {
       status: OrderStatus.niezapłacone,
@@ -63,16 +69,22 @@ export class OrderBasketComponent implements OnInit {
       comment: this.comment,
       paymentId: null,
       paymentMethod: this.selectedPayment?.method || '',
-      orderMenus: this.cart,
-      user: this.userData,
+      orderMenus: orderMenus,
+      userId: this.userData.id,
     }
 
     if (this.selectedPayment?.method === 'Gotówka') {
-        this.orderService.createOrder(order).subscribe(() => {});
-        this.cartService.clearCart();
-        setTimeout(() => {
-          this.router.navigate(['/orders-history'])
-        }, 1000);
+        this.orderService.createOrder(order).subscribe({
+          next: (response) => {
+            this.cartService.clearCart();
+            setTimeout(() => {
+              this.router.navigate(['/orders-history'])
+            }, 1000);
+          },
+          error: (error) => {
+            console.error('Błąd podczas tworzenia zamówienia:', error);
+          }
+        });
     } else {
       this.payUService.createPayUPayment(order).subscribe({
         next: (response: PaymentResponse) => {

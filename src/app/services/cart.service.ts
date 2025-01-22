@@ -31,6 +31,7 @@ export class CartService {
     const existingItem = cart.find(i => i.menu === item.menu);
     if (existingItem) {
       existingItem.quantity += 1;
+      console.log(existingItem);
     }
     this.cart.next(cart);
     this.totalPrice.next(this.calculateTotalPrice(cart));

@@ -60,7 +60,6 @@ export class PaymentConfirmationComponent implements OnInit {
           const order = localStorage.getItem('paymentOrder');
           if (order) {
             this.order = JSON.parse(order);
-            console.log(this.order)
             this.order.paymentId = paymentId;
             this.order.status = OrderStatus.zapłacone;
 

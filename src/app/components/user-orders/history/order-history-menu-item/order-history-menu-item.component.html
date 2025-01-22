@@ -1,0 +1,13 @@
+<div class="main">
+  <div class="image">
+    <img *ngIf="menuItem?.imageUrl; else icon " class="image" alt="" [src]="menuItem?.imageUrl">
+    <ng-template #icon>
+      <i class="fa-solid fa-question"></i>
+    </ng-template>
+  </div>
+  <div>
+    <h3>{{menuItem?.name}}</h3>
+    <p class="quantityText">Ilość:  <span class="quantity">{{item.quantity}}</span></p>
+  </div>
+
+</div>

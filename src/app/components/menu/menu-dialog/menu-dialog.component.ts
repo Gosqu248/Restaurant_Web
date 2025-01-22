@@ -48,6 +48,7 @@ export class MenuDialogComponent implements OnInit {
     this.dialogRef.close();
   }
 
+
   addQuantity(): void {
     this.quantity++;
   }

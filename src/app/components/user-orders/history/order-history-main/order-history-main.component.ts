@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
-import {NgForOf, NgIf} from '@angular/common';
+import {DatePipe, NgForOf, NgIf} from '@angular/common';
 import {OrderHistoryItemComponent} from '../order-history-item/order-history-item.component';
 import {environment} from '../../../../../enviorments/environment';
-import {Order} from '../../../../interfaces/order';
+import {OrderDTO} from '../../../../interfaces/order';
 import {AuthService} from '../../../../services/auth.service';
 import {OrderService} from '../../../../services/order.service';
 
@@ -16,11 +16,12 @@ import {OrderService} from '../../../../services/order.service';
     NgForOf
   ],
   templateUrl: './order-history-main.component.html',
-  styleUrl: './order-history-main.component.scss'
+  styleUrl: './order-history-main.component.scss',
+  providers: [DatePipe]
 })
 export class OrderHistoryMainComponent implements OnInit {
   background = environment.api + '/img/ordersBackground.webp';
-  orders: Order[] = [];
+  orders: OrderDTO[] = [];
   isLoading: boolean = true;
   isAuth: boolean = false;
 
@@ -45,7 +46,6 @@ export class OrderHistoryMainComponent implements OnInit {
       this.orderService.getUserOrders(token).subscribe({
         next: (orders) => {
           this.orders = orders;
-          console.log(token)
           console.log('User orders:', orders);
           this.isLoading = false;
         },

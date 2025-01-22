@@ -16,14 +16,14 @@ import {UserAddress} from '../../../../interfaces/user.address.interface';
 })
 export class UserMenuAddAddressComponent {
   addressForm: FormGroup;
-  isEditMode: boolean = false;
+  isEditMode: boolean | null = false ;
   address: UserAddress = {} as UserAddress;
 
   constructor(
     private addressService: AddressService,
     private dialog: MatDialog,
     public dialogRef: MatDialogRef<UserMenuAddAddressComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { address: UserAddress, isEditMode: boolean },
+    @Inject(MAT_DIALOG_DATA) public data: { address: UserAddress, isEditMode: boolean | null },
     private fb: FormBuilder,
   ) {
     this.isEditMode = data.isEditMode;

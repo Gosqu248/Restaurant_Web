@@ -4,7 +4,7 @@ import { NgForOf, NgIf } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { MenuService } from '../../../services/menu.service';
 
-declare var particlesJS: any;
+declare let particlesJS: any;
 
 @Component({
   selector: 'app-add-menu',

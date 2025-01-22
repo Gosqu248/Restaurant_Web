@@ -6,8 +6,8 @@
     <p>{{ item.menu.price | currencyPL }}</p>
   </div>
 
-  <div class="item-quantity" (click)="removeOne()">
-    <button mat-icon-button >
+  <div class="item-quantity" >
+    <button mat-icon-button (click)="removeOne()">
       <mat-icon>remove</mat-icon>
     </button>
     <span>{{ item.quantity }}</span>

@@ -72,6 +72,10 @@ export class MenuService {
     )
   }
 
+  findMenuById(id: number): Menu | null {
+    return this.menus.getValue().find(menu => menu.id === id) || null;
+  }
+
   private getAllMenus(): Observable<Menu[]> {
     return this.http.get<Menu[]>(`${this.apiUrl}/getAll`);
   }

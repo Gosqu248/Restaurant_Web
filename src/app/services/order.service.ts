@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {environment} from '../../enviorments/environment';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Order} from "../interfaces/order";
+import {Order, OrderDTO, OrderResponse} from "../interfaces/order";
 import {Observable} from "rxjs";
 
 
@@ -13,12 +13,13 @@ export class OrderService {
 
   constructor(private http: HttpClient) { }
 
-  getUserOrders(token: string) {
+  getUserOrders(token: string): Observable<OrderDTO[]> {
     const headers = new HttpHeaders().set("Authorization", `Bearer ${token}`);
-    return this.http.get<Order[]>(`${this.apiUrl}/getUserOrders`, {headers});
+    return this.http.get<OrderDTO[]>(`${this.apiUrl}/user`, {headers});
   }
-  createOrder(order: Order) {
-    return this.http.post(`${this.apiUrl}/createOrder`, order);
+
+  createOrder(order: Order): Observable<OrderResponse> {
+    return this.http.post<OrderResponse>(`${this.apiUrl}/createOrder`, order);
   }
 
 }

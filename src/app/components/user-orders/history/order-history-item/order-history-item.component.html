@@ -1,1 +1,27 @@
-<p>order-history-item works!</p>
+<div class="main">
+  <div class="date">
+    <h3>{{getFormattedDate(order.orderDate)}}</h3>
+    <h3>{{getFormattedTime(order.orderDate)}}</h3>
+  </div>
+  <div class="row-container">
+    <div>
+      <p>Numer zamówienia <span class="span">{{order.id}}</span></p>
+      <p>Płatność: <span class="span2">{{getPaymentMethod()}}</span></p>
+      <p>Cena: <span class="span">{{order.totalPrice | currencyPL}}</span></p>
+    </div>
+  </div>
+
+  <div class="buttons">
+    <button class="toggle-btn" (click)="toggleVisibility()">
+      {{ isVisible ? 'Ukryj menu' : 'Pokaż menu' }}
+    </button>
+  </div>
+
+  <div *ngIf="isVisible">
+    <app-order-history-menu-item
+      *ngFor="let item of order.orderMenus"
+      [item]="item"
+    >
+    </app-order-history-menu-item>
+  </div>
+</div>
