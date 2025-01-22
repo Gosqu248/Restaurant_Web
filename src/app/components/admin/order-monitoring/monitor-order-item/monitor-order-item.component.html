@@ -1,0 +1,40 @@
+<div class="main">
+  <div class="date">
+    <h3>{{getFormattedDate(order.orderDate)}}</h3>
+    <h3>{{getFormattedTime(order.orderDate)}}</h3>
+  </div>
+  <div class="row-container">
+    <div>
+      <h2>Dane użytkownika</h2>
+
+      <p>Imię: <span class="span">{{order.userName}}</span></p>
+      <p>Email użytkownika: <span class="span">{{order.userEmail}}</span></p>
+      <p>Numer telefonu: <span class="span">{{order.userPhone}}</span></p>
+      <hr>
+
+      <p>Numer zamówienia <span class="span">{{order.id}}</span></p>
+      <p *ngIf="order.comment">Komentarz: <span class="span2">{{order.comment}}</span></p>
+      <p>Płatność: <span class="span2">{{order.paymentMethod}}</span></p>
+      <p *ngIf="order.paymentId">Identyfikator płatności: <span class="span2">{{order.paymentId}}</span></p>
+      <p>Czas dostawy: <span class="span2">{{order.deliveryTime}}</span></p>
+      <div class="status">
+        <p>Status: <span class="span2">{{order.status}}</span></p>
+        <button *ngIf="order.status === 'niezapłacone'" class="status-button" (click)="changeStatus()">Zmień status</button>
+      </div>
+      <p>Cena: <span class="span">{{order.totalPrice | currencyPL}}</span></p>
+    </div>
+  </div>
+
+  <div class="buttons">
+    <button class="toggle-btn" (click)="toggleVisibility()">
+      {{ isVisible ? 'Ukryj menu' : 'Pokaż menu' }}
+    </button>
+  </div>
+
+  <div *ngIf="isVisible">
+    <app-order-history-menu-item
+      *ngFor="let menuItem of order.orderMenus"
+      [item]="menuItem">
+    </app-order-history-menu-item>
+  </div>
+</div>

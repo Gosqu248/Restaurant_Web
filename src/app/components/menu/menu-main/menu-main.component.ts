@@ -5,7 +5,7 @@ import configs from '@tsparticles/configs';
 import {MenuService} from '../../../services/menu.service';
 import {NgParticlesService, NgxParticlesModule} from '@tsparticles/angular';
 import {loadSlim} from '@tsparticles/slim';
-import {NgForOf, NgStyle} from '@angular/common';
+import {NgForOf, NgIf, NgStyle} from '@angular/common';
 import {MenuItemComponent} from '../menu-item/menu-item.component';
 import {MenuCategoryComponent} from '../menu-category/menu-category.component';
 import {Subject, takeUntil} from 'rxjs';
@@ -21,16 +21,17 @@ import {CurrencyPLPipe} from '../../../pipes/currency-pl.pipe';
 
 @Component({
   selector: 'app-menu-main',
-  imports: [
-    NgForOf,
-    NgxParticlesModule,
-    MenuItemComponent,
-    MenuCategoryComponent,
-    FormsModule,
-    NgStyle,
-    HomeContactComponent,
-    CurrencyPLPipe,
-  ],
+    imports: [
+        NgForOf,
+        NgxParticlesModule,
+        MenuItemComponent,
+        MenuCategoryComponent,
+        FormsModule,
+        NgStyle,
+        HomeContactComponent,
+        CurrencyPLPipe,
+        NgIf,
+    ],
   templateUrl: './menu-main.component.html',
   standalone: true,
   styleUrl: './menu-main.component.scss'

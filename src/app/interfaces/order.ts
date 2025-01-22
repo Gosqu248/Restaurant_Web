@@ -35,3 +35,18 @@ export interface OrderDTO {
   totalPrice: number;
   orderDate: string;
 }
+
+export interface AdminOrderDTO {
+  id: number;
+  status: OrderStatus;
+  orderDate: string;
+  deliveryTime: string;
+  paymentMethod: string;
+  paymentId: string;
+  comment: string;
+  totalPrice: number;
+  orderMenus: OrderMenu[];
+  userName: string;
+  userEmail: string;
+  userPhone: string;
+}

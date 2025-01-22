@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {DatePipe, NgForOf, NgIf, registerLocaleData} from '@angular/common';
 import localePl from '@angular/common/locales/pl';
 import {OrderHistoryMenuItemComponent} from '../order-history-menu-item/order-history-menu-item.component';
-import {Order, OrderDTO} from '../../../../interfaces/order';
+import {OrderDTO} from '../../../../interfaces/order';
 import {CurrencyPLPipe} from '../../../../pipes/currency-pl.pipe';
 
 @Component({

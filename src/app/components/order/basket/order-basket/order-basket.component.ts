@@ -75,7 +75,7 @@ export class OrderBasketComponent implements OnInit {
 
     if (this.selectedPayment?.method === 'Gotówka') {
         this.orderService.createOrder(order).subscribe({
-          next: (response) => {
+          next: () => {
             this.cartService.clearCart();
             setTimeout(() => {
               this.router.navigate(['/orders-history'])

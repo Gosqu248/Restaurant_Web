@@ -39,13 +39,20 @@ export class AuthService {
     }
   }
 
+  isAuth(): boolean {
+    return this.isAuthenticatedSubject.getValue();
+  }
+
   register(user: User): Observable<any> {
     return this.http.post<{message: string}>(`${this.apiUrl}/register`, user)
   }
 
   fetchUserData(token: string) {
     this.getUser(token).subscribe({
-      next: user => this.userDataSubject.next(user),
+      next: user => {
+        this.userDataSubject.next(user);
+        localStorage.setItem('role', user.role);
+      },
       error: error => console.error('Error fetching user data', error)
     });
   }
@@ -121,6 +128,7 @@ export class AuthService {
       localStorage.removeItem('jwt');
       localStorage.removeItem('name');
       localStorage.removeItem('email');
+      localStorage.removeItem('role');
       this.userDataSubject.next({} as UserDTO);
       this.isAuthenticatedSubject.next(false);
     }

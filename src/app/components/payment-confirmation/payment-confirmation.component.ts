@@ -63,8 +63,15 @@ export class PaymentConfirmationComponent implements OnInit {
             this.order.paymentId = paymentId;
             this.order.status = OrderStatus.zapłacone;
 
-            this.orderService.createOrder(this.order).subscribe(() => {});
-            localStorage.removeItem("paymentOrder")
+            this.orderService.createOrder(this.order).subscribe({
+              next: (response) => {
+                console.log('Zamówienie zapisane', response);
+                localStorage.removeItem("paymentOrder")
+              },
+              error: (error) => {
+                console.error('Błąd podczas zapisywania zamówienia:', error);
+              }
+            });
           } else {
             console.error('Brak zamówienia w localStorage');
           }

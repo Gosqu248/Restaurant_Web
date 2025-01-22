@@ -7,6 +7,8 @@
     <div>
       <p>Numer zamówienia <span class="span">{{order.id}}</span></p>
       <p>Płatność: <span class="span2">{{getPaymentMethod()}}</span></p>
+      <p>Czas odbioru: <span class="span2">{{order.deliveryTime}}</span></p>
+      <p *ngIf="order.comment">Komentarz: <span class="span2">{{order.comment}}</span></p>
       <p>Cena: <span class="span">{{order.totalPrice | currencyPL}}</span></p>
     </div>
   </div>

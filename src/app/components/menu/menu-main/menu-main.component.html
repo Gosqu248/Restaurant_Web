@@ -34,7 +34,7 @@
   <app-home-contact></app-home-contact>
 </div>
 </div>
-<button class="cart-button" (click)="openBasketDialog()">
+<button *ngIf="cart.length > 0 && totalPrice > 0" class="cart-button" (click)="openBasketDialog()">
   <i class="fas fa-shopping-cart"></i>
   <p>{{cart.length}} pozycji za {{totalPrice | currencyPL}}</p>
   <i class="fas fa-chevron-down"></i>

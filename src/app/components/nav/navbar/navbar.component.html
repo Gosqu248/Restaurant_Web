@@ -7,7 +7,7 @@
 
 
     <div class="desktop-menu">
-      <button *ngIf="cart.length > 0 && getCurrentRoute() === '/menu'" class="cart-button" (click)="openBasketDialog()">
+      <button *ngIf="cart.length > 0 && totalPrice > 0.2 && getCurrentRoute() === '/menu'" class="cart-button" (click)="openBasketDialog()">
         <i class="fas fa-shopping-cart"></i>
         <span>{{cart.length}} pozycji za {{totalPrice | currencyPL}}</span>
         <i class="fas fa-chevron-down"></i>

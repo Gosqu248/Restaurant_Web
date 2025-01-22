@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {environment} from '../../enviorments/environment';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Order, OrderDTO, OrderResponse} from "../interfaces/order";
+import {AdminOrderDTO, Order, OrderDTO, OrderResponse, OrderStatus} from "../interfaces/order";
 import {Observable} from "rxjs";
 
 
@@ -20,6 +20,16 @@ export class OrderService {
 
   createOrder(order: Order): Observable<OrderResponse> {
     return this.http.post<OrderResponse>(`${this.apiUrl}/createOrder`, order);
+  }
+
+  getAllOrders(token: string): Observable<AdminOrderDTO[]> {
+    const headers = new HttpHeaders().set("Authorization", `Bearer ${token}`);
+    return this.http.get<AdminOrderDTO[]>(`${this.apiUrl}/all`, {headers});
+  }
+
+  changeOrderStatus(orderId: number): Observable<OrderStatus> {
+    const headers = new HttpHeaders().set("Authorization", `Bearer ${localStorage.getItem('jwt')}`);
+    return this.http.put<OrderStatus>(`${this.apiUrl}/changeStatus/${orderId}`, {}, {headers});
   }
 
 }

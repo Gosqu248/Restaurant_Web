@@ -4,29 +4,26 @@
   position: relative;
 }
 
-.item {
+.item, .item2 {
   position: absolute;
-  width: 600px;
-  top: 300px;
+  width: 85%;
+  max-width: 600px;
+  top: 15%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: rgba(255, 255, 255, 0.8); /* Optional: Add background color with transparency */
+  transform: translateX(-50%);
+  background-color: rgba(255, 255, 255, 0.8);
   padding: 30px;
   border-radius: 10px;
+
+  @media (min-width: 768px) {
+    padding: 50px;
+  }
 }
 
 .item2 {
-  width: 600px;
-  top: 300px;
-  left: 50%;
-  position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
-  transform: translate(-50%, -50%);
-  background-color: rgba(255, 255, 255, 0.8); /* Optional: Add background color with transparency */
-  padding: 30px;
-  border-radius: 10px;
 }
 
 h2 {
@@ -63,7 +60,8 @@ span {
 
 button {
   margin: auto;
-  width: 300px;
+  width: 80%;
+  max-width: 300px;
   height: 50px;
   background: #fd710c;
   color: white;
@@ -80,4 +78,14 @@ button {
 
 button:hover {
   background: #e56613;
+}
+
+@media (min-width: 768px) {
+  .item, .item2 {
+    width: 600px;
+  }
+
+  button {
+    width: 300px;
+  }
 }

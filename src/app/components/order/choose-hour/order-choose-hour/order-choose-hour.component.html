@@ -1,6 +1,6 @@
 <div class="option">
   <h3>Zaplanuj odbiór</h3>
-  <div class="item" [ngClass]="{'selected': isDeliveryOptionSelected('fastest')}" (click)="setDelivery('fastest')">
+  <div class="item" [ngClass]="{'selected': isDeliveryOptionSelected('jak najszybciej')}" (click)="setDelivery('jak najszybciej')">
     <div class="main-item">
       <mat-icon>hourglass_empty</mat-icon>
       <div class="text">
@@ -8,7 +8,7 @@
         <p *ngIf="deliveryOption === 'pickup'">{{pickUpTimeMin}}-{{pickUpTimeMax}}min</p>
       </div>
     </div>
-    <div class="icon-background" *ngIf="isDeliveryOptionSelected('fastest')">
+    <div class="icon-background" *ngIf="isDeliveryOptionSelected('jak najszybciej')">
       <i class="fa-solid fa-check"></i>
     </div>
   </div>

@@ -34,23 +34,17 @@ export class ChooseHourDialogComponent implements OnInit{
     this.maxPickUpTime = this.infoService.pickUpTimeMax;
     this.currentHour = this.infoService.getCurrentOpeningHours();
 
-    const currentTime = new Date();
-    const currentMinutes = currentTime.getMinutes();
-
-    currentTime.setMinutes(currentMinutes + this.maxPickUpTime);
-
-    const minutes = currentTime.getMinutes();
-    const remainder = minutes % 15;
-    if( remainder !== 0 ) {
-      currentTime.setMinutes(minutes + (15 - remainder));
-    }
-
     if (this.currentHour) {
+      const openingTime = this.currentHour.openTime.split(':');
       const closingTime = this.currentHour.closeTime.split(':');
       const closingHour = parseInt(closingTime[0]);
       const closingMinutes = parseInt(closingTime[1]);
 
-      while(currentTime.getHours() < closingHour || (currentTime.getHours() === closingHour && currentTime.getMinutes() <= closingMinutes)) {
+      const currentTime = new Date();
+      currentTime.setHours(parseInt(openingTime[0]), parseInt(openingTime[1]), 0, 0);
+      currentTime.setMinutes(currentTime.getMinutes() + this.maxPickUpTime);
+
+      while (currentTime.getHours() < closingHour || (currentTime.getHours() === closingHour && currentTime.getMinutes() <= closingMinutes)) {
         this.availableHours.push(currentTime.toTimeString().substring(0, 5));
         currentTime.setMinutes(currentTime.getMinutes() + 15);
       }
