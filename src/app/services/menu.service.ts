@@ -32,7 +32,6 @@ export class MenuService {
   );
 
   constructor(private http: HttpClient) {
-    this.fetchMenus();
   }
 
   fetchMenus(): void {

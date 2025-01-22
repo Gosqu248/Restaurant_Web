@@ -22,6 +22,7 @@ export class MenuCategoryComponent implements OnInit, OnDestroy, AfterViewInit {
   showLeftButton = false;
   showRightButton = false;
   private destroy$ = new Subject<void>();
+
   constructor(private menuService: MenuService) {
   }
 
@@ -29,7 +30,7 @@ export class MenuCategoryComponent implements OnInit, OnDestroy, AfterViewInit {
     this.menuService.categories$
       .pipe(takeUntil(this.destroy$))
       .subscribe((categories) => {
-        this.categories = categories
+        this.categories = categories;
         setTimeout(() => this.checkScrollButtons(), 0);
       });
 
@@ -52,6 +53,8 @@ export class MenuCategoryComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   scroll(direction: 'left' | 'right') {
+    if (this.categories.length <= 1) return;
+
     const container = this.categoriesContainer.nativeElement;
     const scrollAmount = 250;
 
@@ -63,10 +66,16 @@ export class MenuCategoryComponent implements OnInit, OnDestroy, AfterViewInit {
     this.checkScrollButtons();
   }
 
-   checkScrollButtons() {
+  checkScrollButtons() {
     if (!this.categoriesContainer) return;
 
     const container = this.categoriesContainer.nativeElement;
+
+    if (this.categories.length <= 1) {
+      this.showLeftButton = false;
+      this.showRightButton = false;
+      return;
+    }
 
     requestAnimationFrame(() => {
       const isOverflowing = container.scrollWidth > container.clientWidth;
