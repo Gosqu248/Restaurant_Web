@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
 import {DatePipe, NgForOf, NgIf} from '@angular/common';
 import {OrderHistoryItemComponent} from '../order-history-item/order-history-item.component';
-import {environment} from '../../../../../enviorments/environment';
+import {environment} from '../../../../../environments/environment';
 import {OrderDTO} from '../../../../interfaces/order';
 import {AuthService} from '../../../../services/auth.service';
 import {OrderService} from '../../../../services/order.service';

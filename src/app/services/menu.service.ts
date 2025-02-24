@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {environment} from '../../enviorments/environment';
+import {environment} from '../../environments/environment';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {BehaviorSubject, catchError, forkJoin, map, Observable, of, shareReplay, switchMap} from 'rxjs';
 import {Menu} from '../interfaces/menu';

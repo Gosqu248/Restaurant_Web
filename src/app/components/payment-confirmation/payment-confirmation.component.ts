@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
 import {NgIf} from '@angular/common';
 import {Router, RouterLink} from '@angular/router';
-import { environment } from '../../../enviorments/environment';
+import { environment } from '../../../environments/environment';
 import {PayUService} from '../../services/pay-u.service';
 import {Order, OrderStatus} from '../../interfaces/order';
 import {OrderService} from '../../services/order.service';

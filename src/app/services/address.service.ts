@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {environment} from '../../enviorments/environment';
+import {environment} from '../../environments/environment';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {UserAddress} from '../interfaces/user.address.interface';
 import {BehaviorSubject, catchError, Observable, of, tap} from 'rxjs';

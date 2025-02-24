@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {environment} from '../../enviorments/environment';
+import {environment} from '../../environments/environment';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {AdminOrderDTO, Order, OrderDTO, OrderResponse, OrderStatus} from "../interfaces/order";
 import {Observable} from "rxjs";
