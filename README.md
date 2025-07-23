@@ -1,75 +1,154 @@
-# Restaurant_Web
+# 🍽️ Restaurant_Web – Fullstack Web App for Restaurants
 
-Restaurant_Web is a cutting-edge web application designed for restaurants, offering an immersive experience for both customers and administrators. The platform simplifies menu browsing, food ordering, and secure payment processing while providing robust authentication and efficient order management capabilities.
+Restaurant_Web is a fullstack monorepo application tailored for modern restaurants. It provides a seamless customer and administrator experience, enabling everything from menu browsing and ordering to secure payments and admin product/order management. The system is containerized using Docker and reverse-proxied via NGINX for efficient deployment.
+- Project from December 2024
+---
 
-## Backend Repository
+## 🧩 Architecture Overview
 
-For the backend implementation of Restaurant_Web, please refer to the following repository:
+This monorepo contains:
 
-[TAW_Backend](https://github.com/Gosqu248/TAW_Backend)
+- **Frontend** – Angular SPA for customers and admins (port `4200`)
+- **Backend** – Spring Boot REST API (port `8080`)
+- **Database** – PostgreSQL
+- **Reverse Proxy** – NGINX (port `80`) handling route forwarding
+- **Docker Compose** – Orchestrates all services
 
-## Overview
+---
 
-Restaurant_Web is engineered to streamline restaurant operations through a modern, responsive interface. By integrating secure payment gateways, advanced authentication mechanisms, and a comprehensive admin panel, the application delivers a seamless experience to both end users and restaurant staff.
+## 🚀 Key Features
 
-## Technologies & Tools
+### 👥 Customer Panel
 
-The project leverages a blend of contemporary technologies and tools to ensure high performance, security, and scalability:
+- Responsive UI for **menu browsing**
+- **Food ordering system**
+- **PayU** integration for secure payments
+- **Google OAuth2** login and traditional email login with **2FA** and account lockout
+- **Address management** and **order history**
 
-- ![Java](https://img.shields.io/badge/Language-Java-informational?style=flat&logo=java&color=007396)
-- ![TypeScript](https://img.shields.io/badge/Language-TypeScript-informational?style=flat&logo=typescript&color=3178C6)
-- ![Spring Boot](https://img.shields.io/badge/Framework-Spring_Boot-informational?style=flat&logo=spring&color=6DB33F)
-- ![Angular](https://img.shields.io/badge/Framework-Angular-informational?style=flat&logo=angular&color=DD0031)
-- ![PostgreSQL](https://img.shields.io/badge/Database-PostgreSQL-informational?style=flat&logo=postgresql&color=336791)
-- ![SCSS](https://img.shields.io/badge/Style-SCSS-informational?style=flat&logo=sass&color=CC6699)
-- ![tsParticles](https://img.shields.io/badge/Library-tsParticles-informational?style=flat&logo=typescript&color=000000)
-- ![Angular Material](https://img.shields.io/badge/Library-Angular_Material-informational?style=flat&logo=angular&color=DD0031)
-- ![PayU Sandbox](https://img.shields.io/badge/Payment-PayU_Sandbox-informational?style=flat&logo=paypal&color=009cde)
-- ![Postman](https://img.shields.io/badge/Tool-Postman-informational?style=flat&logo=postman&color=FF6C37)
+### 🛠️ Admin Panel
 
-## Features
+- Add/edit/remove products (images saved as BLOBs in DB)
+- Manage all customer orders in real time
 
-### Customer Features
+---
 
-- **Menu Browsing:**  
-  Enjoy a visually appealing menu display with detailed descriptions and high-resolution images.
+## 🛠️ Tech Stack
 
-- **Food Ordering:**  
-  Place orders effortlessly through an intuitive and responsive ordering system.
+| Layer      | Technology                                   |
+|------------|----------------------------------------------|
+| Frontend   | Angular, Angular Material, SCSS, tsParticles |
+| Backend    | Spring Boot, Java 21, JPA, JWT, OAuth2, Mail |
+| Database   | PostgreSQL                                   |
+| Payments   | PayU Sandbox                                 |
+| Deployment | Docker, Docker Compose, NGINX                |
 
-- **Secure Payments:**  
-  Process transactions securely via integration with the PayU Sandbox, ensuring a smooth checkout experience.
+---
 
-- **User Authentication:**  
-  - **Google Login:** Fast and secure login using your Google account.
-  - **Standard Login with Two-Factor Authentication:**  
-    Protect your account with:
-    - Two-factor authentication (2FA) via a verification code sent to your email.
-    - Account lockout for 5 minutes after 5 consecutive incorrect password attempts.
+## 🧪 Security
 
-- **Address Management:**  
-  Easily add and manage your delivery addresses from your user profile.
+- **JWT**-based stateless authentication
+- **Two-Factor Authentication (2FA)** via email
+- **Account lockout** after 5 failed login attempts
+- **OAuth2** login via Google
 
-- **Order History:**  
-  Access and review your previous orders to streamline future purchases.
+---
 
-### Administrator Panel
+## 📁 Repository Structure
 
-- **Product Management:**  
-  - **Add New Products:**  
-    Administrators can seamlessly add new items to the menu. Product images are stored directly in the database as BLOBs.
-  - **Edit Existing Products:**  
-    Update product details effortlessly using the admin interface.
+```
+.
+├── backend/           # Spring Boot backend
+├── frontend/          # Angular frontend
+├── nginx/             # NGINX reverse proxy
+├── docker-compose.yml # Multi-container deployment
+└── README.md
+```
 
-- **Order Management:**  
-  View and manage all customer orders in real time, ensuring efficient service and prompt responses.
+---
 
+## 🧰 How to Run Locally (Using Docker)
 
-## Getting Started
+### 1. Clone the Repository
 
-To set up Restaurant_Web locally, follow these steps:
+```bash
+git clone https://github.com/Gosqu248/Restaurant_Web.git
+cd Restaurant_Web
+```
 
-1. **Clone the Repository:**
+### 2. Build and Start All Services
 
-   ```bash
-   git clone https://github.com/your-username/Restaurant_Web.git
+```bash
+docker-compose up --build
+```
+
+This will:
+- Build the **Angular frontend**
+- Build the **Spring Boot backend**
+- Start **NGINX**, **Maildev**
+
+Then open your browser at:  
+🔗 `http://localhost`
+
+> 🔒 All frontend API calls are routed to `/api/**` and proxied to the backend via NGINX.
+
+---
+
+## 🌐 NGINX Configuration
+
+The NGINX server serves the frontend on `/` and proxies:
+
+- `/api/**` → `backend:8080`
+
+It also handles CORS and preflight OPTIONS requests.
+
+Example config snippet:
+```nginx
+location /api {
+    rewrite ^/api/?(.*)$ /$1 break;
+    proxy_pass http://backend:8080;
+    add_header 'Access-Control-Allow-Origin' $http_origin always;
+    
+}
+```
+
+---
+
+## 🔑 Environment Configuration
+
+Backend properties (`application.properties`) include:
+
+- Google OAuth2 client and secret
+- PostgreSQL URL and schema
+- PayU credentials
+- Maildev for email testing
+- JWT expiration and 2FA mail settings
+
+---
+
+## 💡 Tips
+
+- Admin and customer panels are both integrated in the Angular app, shown based on user roles.
+- Email testing is enabled through MailDev at:  
+  🔗 `http://localhost:1080`
+
+---
+
+## ✨ UI Libraries
+
+### tsParticles
+
+The project uses **tsParticles** to create beautiful particle effects (e.g., for landing pages or backgrounds). It's highly customizable and adds an interactive, visually appealing layer to the user experience without impacting performance.
+
+- Documentation: [https://particles.js.org/](https://particles.js.org/)
+- Configurable via Angular services and JSON options
+
+### Angular Material
+
+The frontend is styled with **Angular Material**, providing:
+
+- Prebuilt and responsive UI components (buttons, dialogs, tooltips, etc.)
+- Accessibility features and mobile-friendly design
+- Consistent look and feel across the application
+
+> Angular Material enables fast development of modern and clean UIs with full integration into Angular’s reactive forms and routing systems.
